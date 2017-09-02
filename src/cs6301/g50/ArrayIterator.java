@@ -1,5 +1,10 @@
-package cs6301.g50;
+/**  Iterator for arrays
+ *   @author rbk
+ *  Ver 1.0: 2017/08/08
+ *  Ver 1.1: 2017/08/28.  Updated some methods to public
+ */
 
+package cs6301.g50;
 import java.util.Iterator;
 
 public class ArrayIterator<T> implements Iterator<T> {

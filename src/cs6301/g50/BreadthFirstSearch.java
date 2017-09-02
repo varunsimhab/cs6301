@@ -1,9 +1,3 @@
-/** @author rbk
- *  Sample IO class
- *  Ver 1.0: 2017/08/08
- **/
-
-
 package cs6301.g50;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -54,19 +48,19 @@ public class BreadthFirstSearch {
     }
 
     boolean seen(Graph.Vertex u) {
-        BFSVertex ccu = getCCVertex(u);
+        BFSVertex ccu = getBFSVertex(u);
         return ccu.seen;
     }
 
     // Visit a node by marking it as seen and assigning it a component no
     void visit(Graph.Vertex u, int cno) {
-        BFSVertex ccu = getCCVertex(u);
+        BFSVertex ccu = getBFSVertex(u);
         ccu.seen = true;
         ccu.cno = cno;
     }
 
     // From Vertex to BFSVertex (ugly)
-    BFSVertex getCCVertex(Graph.Vertex u) {
+    BFSVertex getBFSVertex(Graph.Vertex u) {
         return bfsVertex[u.name];
     }
 
@@ -90,7 +84,7 @@ public class BreadthFirstSearch {
 
         System.out.println("Input Graph has " + nc + " components:");
         for(Graph.Vertex u: g) {
-            System.out.print(u + " [ " + cc.getCCVertex(u).cno + " ] :");
+            System.out.print(u + " [ " + cc.getBFSVertex(u).cno + " ] :");
             for(Graph.Edge e: u.adj) {
                 Graph.Vertex v = e.otherEnd(u);
                 System.out.print(e + " ");
