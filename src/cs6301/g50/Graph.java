@@ -42,7 +42,7 @@ public class Graph implements Iterable<Graph.Vertex> {
          *
          */
         public int getName() {
-            return name;
+            return name+1;
         }
 
         public Iterator<Edge> iterator() { return adj.iterator(); }

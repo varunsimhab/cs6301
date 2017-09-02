@@ -1,12 +1,16 @@
 package cs6301.g50;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class BreadthFirstSearch {
     // Class to store information about a vertex in this algorithm
     class BFSVertex {
         Graph.Vertex element;
+        Graph.Vertex parent;
         boolean seen;
         int cno;
         BFSVertex(Graph.Vertex u) {
@@ -25,26 +29,40 @@ public class BreadthFirstSearch {
         for(Graph.Vertex u: g) { bfsVertex[u.name] = new BFSVertex(u); }
     }
 
-    // Main algorithm for finding the number of connected components of g using DFS
-    int findCC() {
-        int cno = 0;
-        for(Graph.Vertex u: g) {
-            if(!seen(u)) {
-                cno++;
-                dfsVisit(u, cno);
-            }
-        }
-        return cno;
+    public void resetVertexStates(){
+        for(Graph.Vertex u: g) { bfsVertex[u.name].cno = -1; bfsVertex[u.name].seen = false; }
     }
 
-    void dfsVisit(Graph.Vertex u, int cno) {
-        visit(u, cno);
-        for(Graph.Edge e: u) {
-            Graph.Vertex v = e.otherEnd(u);
-            if(!seen(v)) {
-                dfsVisit(v, cno);
+    // Main algorithm for finding the number of connected components of g using DFS
+    Graph.Vertex doBfs(Graph.Vertex vertex) {
+        int cno = 0;
+        Queue<Graph.Vertex> adjqueue = new LinkedList<>();
+        adjqueue.add(vertex);
+        visit(vertex,vertex,cno);
+        while (!adjqueue.isEmpty()){
+            vertex = adjqueue.remove();
+            cno = getBFSVertex(vertex).cno;
+            for(Graph.Edge e: vertex) {
+                Graph.Vertex v = e.otherEnd(vertex);
+                if(!seen(v)) {
+                    visit(v,vertex,cno+1);
+                    adjqueue.add(v);
+                }
             }
         }
+        return vertex;
+    }
+
+    LinkedList<Graph.Vertex> getDiameterPath(Graph.Vertex vertex){
+        LinkedList<Graph.Vertex> list = new LinkedList<>();
+        list.add(vertex);
+        Graph.Vertex parent = getBFSVertex(vertex).parent;
+        while (parent!=vertex){
+            list.add(parent);
+            vertex = parent;
+            parent= getBFSVertex(parent).parent;
+        }
+        return list;
     }
 
     boolean seen(Graph.Vertex u) {
@@ -53,10 +71,11 @@ public class BreadthFirstSearch {
     }
 
     // Visit a node by marking it as seen and assigning it a component no
-    void visit(Graph.Vertex u, int cno) {
+    void visit(Graph.Vertex u, Graph.Vertex parent, int cno) {
         BFSVertex ccu = getBFSVertex(u);
         ccu.seen = true;
         ccu.cno = cno;
+        ccu.parent = parent;
     }
 
     // From Vertex to BFSVertex (ugly)
@@ -79,30 +98,26 @@ public class BreadthFirstSearch {
             in = new Scanner(System.in);
         }
         Graph g = Graph.readGraph(in);
-        BreadthFirstSearch cc = new BreadthFirstSearch(g);
-        int nc = cc.findCC();
+        BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch(g);
+        Graph.Vertex furthest = breadthFirstSearch.doBfs(g.getVertex(1));
+        LinkedList<Graph.Vertex> list = breadthFirstSearch.getDiameterPath(furthest);
 
-        System.out.println("Input Graph has " + nc + " components:");
-        for(Graph.Vertex u: g) {
-            System.out.print(u + " [ " + cc.getBFSVertex(u).cno + " ] :");
-            for(Graph.Edge e: u.adj) {
-                Graph.Vertex v = e.otherEnd(u);
-                System.out.print(e + " ");
-            }
-            System.out.println();
-        }
+        System.out.println("Furthest Vertex " + furthest.getName());
     }
 }
 
 /******************************
  $ java cs6301.g00.BreadthFirstSearch
- 7 6
+ 10 9
  1 3 1
  4 3 1
  4 1 1
  2 6 1
  6 7 1
  7 2 1
+ 8 3 1
+ 8 9 1
+ 10 9 1
 
  Output:
  Input Graph has 3 components:
