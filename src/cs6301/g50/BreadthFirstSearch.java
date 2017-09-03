@@ -7,45 +7,35 @@ import java.util.Queue;
 import java.util.Scanner;
 
 public class BreadthFirstSearch {
-    // Class to store information about a vertex in this algorithm
-    class BFSVertex {
-        Graph.Vertex element;
-        Graph.Vertex parent;
-        boolean seen;
-        int cno;
-        BFSVertex(Graph.Vertex u) {
-            element = u;
-            seen = false;
-            cno = -1;
-        }
-    }
-    // Algorithm uses a parallel array for storing information about vertices
     BFSVertex[] bfsVertex;
     Graph g;
-
     public BreadthFirstSearch(Graph g) {
         this.g = g;
         bfsVertex = new BFSVertex[g.size()];
-        for(Graph.Vertex u: g) { bfsVertex[u.name] = new BFSVertex(u); }
+        for (Graph.Vertex u : g) {
+            bfsVertex[u.name] = new BFSVertex(u);
+        }
     }
 
-    public void resetVertexStates(){
-        for(Graph.Vertex u: g) { bfsVertex[u.name].cno = -1; bfsVertex[u.name].seen = false; }
+    public void resetVertexStates() {
+        for (Graph.Vertex u : g) {
+            bfsVertex[u.name].cno = -1;
+            bfsVertex[u.name].seen = false;
+        }
     }
 
-    // Main algorithm for finding the number of connected components of g using DFS
     Graph.Vertex doBfs(Graph.Vertex vertex) {
         int cno = 0;
         Queue<Graph.Vertex> adjqueue = new LinkedList<>();
         adjqueue.add(vertex);
-        visit(vertex,vertex,cno);
-        while (!adjqueue.isEmpty()){
+        visit(vertex, vertex, cno);
+        while (!adjqueue.isEmpty()) {
             vertex = adjqueue.remove();
             cno = getBFSVertex(vertex).cno;
-            for(Graph.Edge e: vertex) {
+            for (Graph.Edge e : vertex) {
                 Graph.Vertex v = e.otherEnd(vertex);
-                if(!seen(v)) {
-                    visit(v,vertex,cno+1);
+                if (!seen(v)) {
+                    visit(v, vertex, cno + 1);
                     adjqueue.add(v);
                 }
             }
@@ -53,14 +43,23 @@ public class BreadthFirstSearch {
         return vertex;
     }
 
-    LinkedList<Graph.Vertex> getDiameterPath(Graph.Vertex vertex){
+    /**
+     * Function to get Diameter Path in a graph given an end vertex,i.e. of of the
+     * two ends of the diameter.
+     * End vertex will have a parent. The other end will have itself as the parent
+     *
+     * @param vertex
+     * @return LinkedList of vertex type
+     */
+
+    LinkedList<Graph.Vertex> getDiameterPath(Graph.Vertex vertex) {
         LinkedList<Graph.Vertex> list = new LinkedList<>();
         list.add(vertex);
         Graph.Vertex parent = getBFSVertex(vertex).parent;
-        while (parent!=vertex){
+        while (parent != vertex) {
             list.add(parent);
             vertex = parent;
-            parent= getBFSVertex(parent).parent;
+            parent = getBFSVertex(parent).parent;
         }
         return list;
     }
@@ -70,7 +69,6 @@ public class BreadthFirstSearch {
         return ccu.seen;
     }
 
-    // Visit a node by marking it as seen and assigning it a component no
     void visit(Graph.Vertex u, Graph.Vertex parent, int cno) {
         BFSVertex ccu = getBFSVertex(u);
         ccu.seen = true;
@@ -78,15 +76,32 @@ public class BreadthFirstSearch {
         ccu.parent = parent;
     }
 
-    // From Vertex to BFSVertex (ugly)
     BFSVertex getBFSVertex(Graph.Vertex u) {
         return bfsVertex[u.name];
     }
 
-    // From BFSVertex to Vertex
+    /**
+     *
+     * @param c
+     * @return
+     */
     Graph.Vertex getVertex(BFSVertex c) {
         return c.element;
     }
+
+    class BFSVertex {
+        Graph.Vertex element;
+        Graph.Vertex parent;
+        boolean seen;
+        int cno;
+
+        BFSVertex(Graph.Vertex u) {
+            element = u;
+            seen = false;
+            cno = -1;
+        }
+    }
+
 
     public static void main(String[] args) throws FileNotFoundException {
         int evens = 0;
