@@ -1,9 +1,15 @@
-package cs6301.g50;
-
 /**
- * Created by Varun on 8/30/2017.
- * Group -50
- */
+ * Created by
+ * Group 50
+ *
+ * Varun Simha Balaraju
+ * Venkata Sarath Chandra Prasad Nelapati
+ * Jithin Paul
+ * Sunit Mathew
+ * on 8/25/2017.
+ **/
+
+package cs6301.g50; 
 class Timer {
     long startTime, endTime, elapsedTime, memAvailable, memUsed;
 

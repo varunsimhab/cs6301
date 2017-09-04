@@ -1,5 +1,15 @@
-package cs6301.g50;
+/**
+ * Created by
+ * Group 50
+ *
+ * Varun Simha Balaraju
+ * Venkata Sarath Chandra Prasad Nelapati
+ * Jithin Paul
+ * Sunit Mathew
+ * on 8/29/2017.
+ **/
 
+package cs6301.g50;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
@@ -7,8 +17,30 @@ import java.util.Queue;
 import java.util.Scanner;
 
 public class BreadthFirstSearch {
-    BFSVertex[] bfsVertex;
+    BFSVertex[] bfsVertex; //BFSVertices
     Graph g;
+	
+	
+	/*
+      Class to store information about a vertex in this algorithm
+    */
+	class BFSVertex {
+        Graph.Vertex element; //equivalent graph vertex
+        Graph.Vertex parent; // parent vertex
+        boolean seen; //variable to check if the BFSvertex has already been visited.
+        int cno; 
+
+        BFSVertex(Graph.Vertex u) {
+            element = u;
+            seen = false;
+            cno = -1;
+        }
+    }
+	
+	
+	/*
+      Constructor of the BreadthFirstSearch Class
+    */
     public BreadthFirstSearch(Graph g) {
         this.g = g;
         bfsVertex = new BFSVertex[g.size()];
@@ -16,14 +48,29 @@ public class BreadthFirstSearch {
             bfsVertex[u.name] = new BFSVertex(u);
         }
     }
+	
 
+	/*
+      Function to reset data of all the BFSVertices in 
+	  the graph. This function is called in-between two separate
+      calls of doBFS() to reset BFSVertex data members.	  
+      @param
+      @return
+    */
     public void resetVertexStates() {
         for (Graph.Vertex u : g) {
             bfsVertex[u.name].cno = -1;
             bfsVertex[u.name].seen = false;
         }
     }
+	
 
+	/*
+      Method to perform BFS in a graph given a start vertex. It
+	  will return the furthest vertex from the start vertex.     
+      @param vertex
+      @return vertex
+    */
     Graph.Vertex doBfs(Graph.Vertex vertex) {
         int cno = 0;
         Queue<Graph.Vertex> adjqueue = new LinkedList<>();
@@ -42,16 +89,14 @@ public class BreadthFirstSearch {
         }
         return vertex;
     }
+	
 
-    /**
-     * Function to get Diameter Path in a graph given an end vertex,i.e. of of the
-     * two ends of the diameter.
-     * End vertex will have a parent. The other end will have itself as the parent
-     *
-     * @param vertex
-     * @return LinkedList of vertex type
-     */
-
+    /*
+      Method to get Diameter path in a graph given an end vertex of the diameter. 
+	  End vertex will have a parent. The other end will have itself as the parent.      
+      @param vertex
+      @return LinkedList of vertex type
+    */
     LinkedList<Graph.Vertex> getDiameterPath(Graph.Vertex vertex) {
         LinkedList<Graph.Vertex> list = new LinkedList<>();
         list.add(vertex);
@@ -64,11 +109,25 @@ public class BreadthFirstSearch {
         return list;
     }
 
+	
+	/*
+      Method to get the seen status of the equivalent BFSVertex
+	  given a vertex.
+	  @param vertex
+      @return Boolean
+    */
     boolean seen(Graph.Vertex u) {
         BFSVertex ccu = getBFSVertex(u);
         return ccu.seen;
     }
 
+	
+	/*
+      Method to update Seen Status and Parent Vertex of 
+	  the equivalent BFSvertex given a vertex.
+	  @param vertex
+      @return
+    */
     void visit(Graph.Vertex u, Graph.Vertex parent, int cno) {
         BFSVertex ccu = getBFSVertex(u);
         ccu.seen = true;
@@ -76,33 +135,27 @@ public class BreadthFirstSearch {
         ccu.parent = parent;
     }
 
+	
+	/*
+      Method to get BFSVertex from vertex
+	  @param vertex
+      @return BFSVertex
+    */
     BFSVertex getBFSVertex(Graph.Vertex u) {
         return bfsVertex[u.name];
     }
 
-    /**
-     *
-     * @param c
-     * @return
-     */
+
+	/*
+      Method to get vertex from BFSVertex
+	  @param BFSVertex
+      @return vertex
+    */
     Graph.Vertex getVertex(BFSVertex c) {
         return c.element;
     }
 
-    class BFSVertex {
-        Graph.Vertex element;
-        Graph.Vertex parent;
-        boolean seen;
-        int cno;
-
-        BFSVertex(Graph.Vertex u) {
-            element = u;
-            seen = false;
-            cno = -1;
-        }
-    }
-
-
+   
     public static void main(String[] args) throws FileNotFoundException {
         int evens = 0;
         Scanner in;

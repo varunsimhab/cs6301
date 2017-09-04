@@ -1,4 +1,4 @@
-package cs6301.g50; /**
+/**
  * Created by Varun on 8/26/2017.
  */
 /**
@@ -12,6 +12,7 @@ package cs6301.g50; /**
  * on 8/25/2017.
  */
 
+package cs6301.g50; 
 class GenericsMergeSort<T extends Comparable<? super T>>{
 
     private T arr[];

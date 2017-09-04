@@ -1,5 +1,3 @@
-package cs6301.g50;
-
 /**
  * Created by
  * Group 50
@@ -11,6 +9,7 @@ package cs6301.g50;
  * on 8/25/2017.
  **/
 
+package cs6301.g50;
 class InsertionSort<T extends Comparable<? super T>> {
 
     private T arr[];

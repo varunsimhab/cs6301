@@ -1,5 +1,15 @@
-package cs6301.g50;
+/**
+ * Created by
+ * Group 50
+ *
+ * Varun Simha Balaraju
+ * Venkata Sarath Chandra Prasad Nelapati
+ * Jithin Paul
+ * Sunit Mathew
+ * on 8/29/2017.
+ **/
 
+package cs6301.g50; 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;

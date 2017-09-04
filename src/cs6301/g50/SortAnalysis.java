@@ -1,4 +1,4 @@
-package cs6301.g50; /**
+/**
  * Created by
  * Group 50
  *
@@ -9,7 +9,7 @@ package cs6301.g50; /**
  * on 8/25/2017.
  **/
 
-
+package cs6301.g50; 
 import java.util.Scanner;
 
 

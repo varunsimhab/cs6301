@@ -1,5 +1,3 @@
-package cs6301.g50;
-
 /**
  * Created by
  * Group 50
@@ -10,6 +8,8 @@ package cs6301.g50;
  * Sunit Mathew
  * on 8/25/2017.
  **/
+
+package cs6301.g50; 
 class MergeSort {
 
     private int arr[];
