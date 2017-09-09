@@ -4,7 +4,7 @@
 ## Authors ##
 * Jithin Paul (paul.jitin@gmail.com)
 
-* Sunit Mathew (sunit.mathew@gmail.com)
+* Sunit Mathew (mathew.sunit@gmail.com)
 
 * Varun Simha Balaraju ()
 
