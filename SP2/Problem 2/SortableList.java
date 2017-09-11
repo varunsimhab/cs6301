@@ -61,9 +61,17 @@ public class SortableList<T extends Comparable<? super T>> extends SinglyLinkedL
 	
 	/*Sort this list*/	
     void mergeSort() {
-		if(size() < 2) return;
-		SortableList<T>  l1 = null, l2 = null;
-		splitList(l1,l2);
+		int listSize = size();
+		if(listSize < 2) return;		
+		int mid = listSize/2;
+		Entry<T> tail0 = head;
+	    while(mid-- > 0) {
+            tail0 = tail0.next;
+	    }
+		Entry<T> head1 = tail0.next;
+	    tail0.next = null;
+		SortableList<T> l1 = new SortableList<T>(head.next,tail0,listSize/2);
+		SortableList<T> l2 = new SortableList<T>(head1,tail,listSize- listSize/2);
         l1.mergeSort();
         l2.mergeSort();
         l1.merge(l2);
@@ -77,12 +85,13 @@ public class SortableList<T extends Comparable<? super T>> extends SinglyLinkedL
 	
 	public static void main(String[] args) throws NoSuchElementException {
         int n = 10;
-        if(args.length > 0) {
-            n = Integer.parseInt(args[0]);
-        }
+        //if(args.length > 0) {
+          //  n = Integer.parseInt(args[0]);
+        //}
         SortableList<Integer> lst = new SortableList<Integer>();
+        Random generator = new Random(); 
         for(int i=1; i<=n; i++) {
-            lst.add(new Integer(i));
+            lst.add(generator.nextInt(100));
         }
 		lst.mergeSort();
         lst.printList();
