@@ -1,7 +1,14 @@
 import java.util.*;
 
 /**
- * Created by Sarath on 9/6/2017.
+ * Created by
+ * Group 50
+ *
+ * Varun Simha Balaraju
+ * Venkata Sarath Chandra Prasad Nelapati
+ * Jithin Paul
+ * Sunit Mathew
+ *
  */
 public class ListOps<T extends Comparable<? super T>> {
 
