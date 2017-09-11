@@ -1,6 +1,13 @@
 
 /**
- * Created by Varun on 9/9/2017.
+ * Created by
+ * Group 50
+ *
+ * Varun Simha Balaraju
+ * Venkata Sarath Chandra Prasad Nelapati
+ * Jithin Paul
+ * Sunit Mathew
+ *
  */
 public class Tokenizer {
     public enum Token { VAR, NUM, OP, EQ , OPEN, CLOSE, EOL, FAC }
