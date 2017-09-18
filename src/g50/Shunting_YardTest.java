@@ -1,9 +1,3 @@
-import org.junit.Assert;
-import org.junit.Test;
-
-/**
- * Created by Varun on 9/10/2017.
- */
 /**
  * Created by
  * Group 50
@@ -14,6 +8,11 @@ import org.junit.Test;
  * Sunit Mathew
  *
  */
+import org.junit.Assert;
+import org.junit.Test;
+
+package cs6301.g50;
+
 public class Shunting_YardTest {
     @Test
     public void TestInfixToPostFixEasySample() throws Exception {

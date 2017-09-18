@@ -1,4 +1,3 @@
-import java.util.*;
 /**
  * Created by
  * Group 50
@@ -9,6 +8,8 @@ import java.util.*;
  * Sunit Mathew
  *
  */
+import java.util.*;
+package cs6301.g50;
 
 import java.util.Map;
 public class Shunting_Yard {

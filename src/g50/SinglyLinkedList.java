@@ -5,6 +5,16 @@
  *  "tail" is no longer a valid value.  Subsequently, if items are added
  *  to the list, code would do the wrong thing.
  */
+/**
+ * Modified by
+ * Group 50
+ *
+ * Varun Simha Balaraju
+ * Venkata Sarath Chandra Prasad Nelapati
+ * Jithin Paul
+ * Sunit Mathew
+ *
+ */
 
 package cs6301.g50;
 

@@ -1,5 +1,3 @@
-import java.util.*;
-
 /**
  * Created by
  * Group 50
@@ -10,6 +8,9 @@ import java.util.*;
  * Sunit Mathew
  *
  */
+import java.util.*;
+package cs6301.g50;
+
 public class ListOps<T extends Comparable<? super T>> {
 
     public static <T extends Comparable<? super T>> void

@@ -1,12 +1,21 @@
-import java.util.Iterator;
-
 /**  Iterator for arrays
  *   @author rbk
  *  Ver 1.0: 2017/08/08
  *  Ver 1.1: 2017/08/28.  Updated some methods to public
  */
+/**
+ * Modified by
+ * Group 50
+ *
+ * Varun Simha Balaraju
+ * Venkata Sarath Chandra Prasad Nelapati
+ * Jithin Paul
+ * Sunit Mathew
+ * on 8/29/2017.
+ **/
 
-
+import java.util.Iterator;
+package cs6301.g50;
 
 public class ArrayIterator<T> implements Iterator<T> {
     T[] arr;

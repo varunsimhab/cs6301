@@ -1,5 +1,9 @@
-
-
+/**
+ * Class to represent a graph
+ *  @author rbk
+ *
+ */
+package cs6301.g50;
 
 public class GraphAlgorithm<T> {
     Graph g;
