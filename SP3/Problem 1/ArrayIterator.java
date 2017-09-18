@@ -1,14 +1,7 @@
 import java.util.Iterator;
 
 /**
- * Created by
- * Group 50
- *
- * Venkata Sarath Chandra Prasad Nelapati
- * Varun Simha Balaraju
- * Jithin Paul
- * Sunit Mathew
- *
+ * @author rbk
  */
 public class ArrayIterator<T> implements Iterator<T> {
     T[] arr;

@@ -21,6 +21,7 @@ public class TopoSort {
 
         List<Graph.Vertex> sortedVertices = topoSort.topologicalSort1(graph);
         List<Graph.Vertex> sortedVertices2 = topoSort.topologicalSort2(graph);
+
         System.out.println("Topological order from algo 1 : ");
         System.out.println(sortedVertices==null? "Graph is Cyclic" : sortedVertices);
         System.out.println("Topological order from algo 2 : ");

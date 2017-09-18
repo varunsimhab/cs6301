@@ -1,12 +1,5 @@
 /**
- * Created by
- * Group 50
- *
- * Venkata Sarath Chandra Prasad Nelapati
- * Varun Simha Balaraju
- * Jithin Paul
- * Sunit Mathew
- *
+ * @author rbk
  */
 import java.util.*;
 
