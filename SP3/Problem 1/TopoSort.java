@@ -3,12 +3,11 @@ import java.util.*;
 /**
  * Created by
  * Group 50
- *
+ * <p>
  * Venkata Sarath Chandra Prasad Nelapati
  * Varun Simha Balaraju
  * Jithin Paul
  * Sunit Mathew
- *
  */
 
 public class TopoSort {
@@ -23,10 +22,16 @@ public class TopoSort {
         List<Graph.Vertex> sortedVertices2 = topoSort.topologicalSort2(graph);
 
         System.out.println("Topological order from algo 1 : ");
-        System.out.println(sortedVertices==null? "Graph is Cyclic" : sortedVertices);
+        System.out.println(sortedVertices == null ? "Graph is Cyclic" : sortedVertices);
         System.out.println("Topological order from algo 2 : ");
-        System.out.println(sortedVertices2==null? "Graph is Cyclic" : sortedVertices2);
+        System.out.println(sortedVertices2 == null ? "Graph is Cyclic" : sortedVertices2);
     }
+
+    /*
+    * @input Graph ( directed )
+    * Performs DFS to traverse and adds a node to the stack only
+    * if all its children are added to queue
+     */
 
     private List<Graph.Vertex> topologicalSort2(Graph graph) {
 
@@ -50,6 +55,20 @@ public class TopoSort {
 
     }
 
+    // helper method for topologicalSort2
+    private void topoSortRecursive(Graph.Vertex vertex, boolean[] visited, Stack<Graph.Vertex> stack) {
+        visited[vertex.getName()] = true;
+        for (Graph.Edge edge : vertex) {
+            Graph.Vertex to = edge.to;
+            if (!visited[to.getName()]) {
+                topoSortRecursive(to, visited, stack);
+            }
+        }
+        //pushing to stack only when all its children are pushed to stack.
+        stack.push(vertex);
+    }
+
+    //method to check if given graph is a DAG or not - Used for algo 2
     private boolean checkForCycles(Graph graph) {
         boolean[] visited = new boolean[graph.size()];
         boolean[] stack = new boolean[graph.size()];
@@ -60,6 +79,7 @@ public class TopoSort {
         return false;
     }
 
+    //helper method for checkForCycles
     private boolean isCyclic(Graph.Vertex vertex, boolean[] visited, boolean[] stack) {
         visited[vertex.getName()] = true;
         stack[vertex.getName()] = true;
@@ -75,44 +95,52 @@ public class TopoSort {
         return false;
     }
 
-    private void topoSortRecursive(Graph.Vertex vertex, boolean[] visited, Stack<Graph.Vertex> stack) {
-        visited[vertex.getName()] = true;
-        for (Graph.Edge edge : vertex) {
-            Graph.Vertex to = edge.to;
-            if (!visited[to.getName()]) {
-                topoSortRecursive(to, visited, stack);
-            }
-        }
-        //pushing to stack only when all its children are pushed to stack.
-        stack.push(vertex);
-    }
+    /*
+        @params Graph ( directed )
+        @returns List of vertices ordered topologically.
+     */
 
     private List<Graph.Vertex> topologicalSort1(Graph graph) {
         int[] inDegree = new int[graph.size()];
+
+        /*
+         inDegree for each vertex i.e., No. of edges into the vertex
+         */
         calculateInDegrees(graph, inDegree);
+
         int count = 0;
         Queue<Graph.Vertex> queue = new LinkedList<>();
+
         for (int i = 0; i < inDegree.length; i++) {
+            // if indegree is zero that means it can be the
+            // first in the order out of remaining nodes
             if (inDegree[i] == 0) {
                 queue.add(graph.getVertex(i + 1));
             }
         }
         List<Graph.Vertex> finalQueue = new LinkedList<>();
 
+        /*
+         all nodes with indegrees zero are added to "queue", current node is added to "finalQueue".
+         */
         while (!queue.isEmpty()) {
             Graph.Vertex vertex = queue.poll();
             finalQueue.add(vertex);
             count++;
             for (Graph.Edge edge : vertex) {
                 Graph.Vertex to = edge.to;
+                //reducing indegree of all neighbours of current vertex
                 if (--inDegree[to.getName()] == 0) {
                     queue.add(to);
                 }
             }
         }
+        //this fails if the given graph is not a DAG
         if (count != graph.size()) {
             return null;
         }
+
+        // contains list of topologically ordered vertices.
         return finalQueue;
 
     }
@@ -120,6 +148,7 @@ public class TopoSort {
     private void calculateInDegrees(Graph graph, int[] inDegree) {
         for (Graph.Vertex vertex : graph) {
             for (Graph.Edge edge : vertex) {
+                //add 1 to indegree of 'to' vertex.
                 int to = edge.to.getName();
                 inDegree[to]++;
             }
