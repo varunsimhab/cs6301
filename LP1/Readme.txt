@@ -21,12 +21,22 @@ Code base: Java library: Lists, stacks, queues, sets, maps, hashing, trees. Do n
 
 Starter code and sample drivers are provided. Download lp1-starter.zip here
 
-Your task is to implement the class Num that stores and performs arithmetic operations on arbitrarily large integers. You must use the following data structure for representing Num: Linked list or Array List or Array of long integers, where the digits are in the chosen base. In particular, do not use strings to represent the numbers. Each node of the list stores exactly one long integer. The base is defined to be 10 in the starter code, but you may modify it. In the discussions below, we will use base = 10, using linked lists to represent Num. For base = 10, the number 4628 is represented by the list: 8-->2-->6-->4.
+Your task is to implement the class Num that stores and performs arithmetic operations on arbitrarily large integers.
+You must use the following data structure for representing Num: Linked list or Array List or
+Array of long integers, where the digits are in the chosen base. In particular,
+do not use strings to represent the numbers. Each node of the list stores exactly one long integer.
+The base is defined to be 10 in the starter code, but you may modify it.
+In the discussions below, we will use base = 10, using linked lists to represent Num.
+For base = 10, the number 4628 is represented by the list: 8-->2-->6-->4.
 
 Level 1
 
 Implement the following methods:
-Num(String s): Constructor for Num class; takes a string s as parameter, with a number in decimal, and creates the Num object representing that number in the chosen base. Note that, the string s is in base 10, even if the chosen base is not 10. The string s can have arbitrary length.
+Num(String s): Constructor for Num class; takes a string s as parameter, with a number in decimal, and creates the
+Num object representing that number in the chosen base.
+Note that, the string s is in base 10, even if the chosen base is not 10.
+The string s can have arbitrary length.
+
 Num(long x): Constructor for Num class.
 String toString(): convert the Num class object into its equivalent string (in decimal). There should be no leading zeroes in the string.
 Num add(Num a, Num b): sum of two numbers stored as Num.
