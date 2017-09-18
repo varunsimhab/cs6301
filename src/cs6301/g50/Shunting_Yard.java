@@ -8,10 +8,11 @@
  * Sunit Mathew
  *
  */
-import java.util.*;
-package cs6301.g50;
 
+package cs6301.g50;
+import java.util.*;
 import java.util.Map;
+
 public class Shunting_Yard {
 
     private static final String REGEX_SPACE = "\\s";

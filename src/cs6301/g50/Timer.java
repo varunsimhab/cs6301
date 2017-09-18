@@ -10,10 +10,10 @@
  **/
 
 package cs6301.g50; 
-class Timer {
+public class Timer {
     long startTime, endTime, elapsedTime, memAvailable, memUsed;
 
-    Timer() {
+    public Timer() {
         startTime = System.currentTimeMillis();
     }
 

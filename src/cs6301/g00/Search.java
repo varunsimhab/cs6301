@@ -4,9 +4,12 @@
  */
 
 package cs6301.g00;
+
+import cs6301.g50.Timer;
+
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
-import java.util.Arrays;
 
 public class Search {
 

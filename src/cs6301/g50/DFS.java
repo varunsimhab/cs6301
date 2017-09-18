@@ -8,15 +8,13 @@
  * Sunit Mathew
  * on 8/29/2017.
  **/
+package cs6301.g50;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-
-
-package cs6301.g50;
 
 public class DFS extends GraphAlgorithm<DFS.DFSVertex> {
 
@@ -29,7 +27,14 @@ public class DFS extends GraphAlgorithm<DFS.DFSVertex> {
 
     public static void main(String[] args) throws FileNotFoundException {
         Scanner in;
-        Graph g = Graph.readGraph(new Scanner(new File("StronglyConnectedComponent.txt")), true);
+        if (args.length > 0) {
+            File inputFile = new File(args[0]);
+            in = new Scanner(inputFile);
+        }
+        else
+            in = new Scanner(System.in);
+
+        Graph g = Graph.readGraph(in, true);
         Graph.Vertex src = g.getVertex(1);// "true" because its a directed graph
         DFS scc= new DFS(g,src);
         int result = scc.stronglyConnectedComponents(g);

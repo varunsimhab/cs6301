@@ -4,9 +4,12 @@
  */
 
 package cs6301.g00;
-import java.util.Queue;
-import java.util.LinkedList;
 
+import cs6301.g50.Graph;
+import cs6301.g50.GraphAlgorithm;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 
 public class BFS extends GraphAlgorithm<BFS.BFSVertex> {

@@ -8,8 +8,8 @@
  * Sunit Mathew
  *
  */
-import java.util.*;
 package cs6301.g50;
+import java.util.*;
 
 public class ListOps<T extends Comparable<? super T>> {
 

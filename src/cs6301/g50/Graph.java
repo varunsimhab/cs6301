@@ -33,8 +33,9 @@ public class Graph implements Iterable<Graph.Vertex> {
 	 */
 
 	public static class Vertex implements Iterable<Edge> {
-		int name; // name of the vertex
-		List<Edge> adj, revAdj; // adjacency list; use LinkedList or ArrayList
+		public int name; // name of the vertex
+		public List<Edge> adj;
+		List<Edge> revAdj; // adjacency list; use LinkedList or ArrayList
 
 		/**
 		 * Constructor for the vertex

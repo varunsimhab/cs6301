@@ -5,6 +5,9 @@
  */
 
 package cs6301.g00;
+
+import cs6301.g50.Graph;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
