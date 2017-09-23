@@ -7,7 +7,7 @@ package cs6301.g50;
 
 import java.util.ArrayList;
 
-public class Num  implements Comparable<Num> {
+public class Num implements Comparable<Num> {
 
     static long defaultBase = 10;  // This can be changed to what you want it to be.
     static long base = defaultBase;  // Change as needed
@@ -23,33 +23,33 @@ public class Num  implements Comparable<Num> {
             char_s.add(c);
         }
         negsign = false;
-        if(char_s.get(0)=='-'){
+        if (char_s.get(0) == '-') {
             negsign = true;
             char_s.remove(0);
         }
-        if(!char_s.isEmpty()){
-            this.val = Character.getNumericValue(char_s.get(char_s.size()-1));
-            char_s.remove(char_s.size()-1);
-            if(!char_s.isEmpty()){
+        if (!char_s.isEmpty()) {
+            this.val = Character.getNumericValue(char_s.get(char_s.size() - 1));
+            char_s.remove(char_s.size() - 1);
+            if (!char_s.isEmpty()) {
                 this.next = new Num(char_s, negsign);
             }
         }
     }
 
     Num(ArrayList<Character> char_s, boolean negsign) {
-        this.val = Character.getNumericValue(char_s.get(char_s.size()-1));
+        this.val = Character.getNumericValue(char_s.get(char_s.size() - 1));
         this.negsign = negsign;
-        char_s.remove(char_s.size()-1);
-        if(!char_s.isEmpty()){
+        char_s.remove(char_s.size() - 1);
+        if (!char_s.isEmpty()) {
             this.next = new Num(char_s, negsign);
         }
     }
 
     Num(long x) {
-        if(x<0){
-            val = -1*x;
+        if (x < 0) {
+            val = -1 * x;
             negsign = true;
-        }else{
+        } else {
             val = x;
             negsign = false;
         }
@@ -57,17 +57,17 @@ public class Num  implements Comparable<Num> {
 
     static Num add(Num a, Num b, long carry) {
         long sum = b.val + a.val + carry;
-        Num nextDigit = new Num(sum%base);
-        carry = sum/base;
+        Num nextDigit = new Num(sum % base);
+        carry = sum / base;
 
-        if((null!=a.next)&&(null!=b.next)){
-            nextDigit.next = add(a.next,b.next,carry);
-        }else if(null!=a.next){
-            nextDigit.next = add(a.next,carry);
-        }else if(null!=b.next){
-            nextDigit.next = add(b.next,carry);
-        }else{
-            if(carry>0){
+        if ((null != a.next) && (null != b.next)) {
+            nextDigit.next = add(a.next, b.next, carry);
+        } else if (null != a.next) {
+            nextDigit.next = add(a.next, carry);
+        } else if (null != b.next) {
+            nextDigit.next = add(b.next, carry);
+        } else {
+            if (carry > 0) {
                 nextDigit.next = new Num(carry);
             }
         }
@@ -77,25 +77,25 @@ public class Num  implements Comparable<Num> {
     static Num subtract(Num a, Num b, long carry) {
         long sum = a.val - b.val + carry;
         Num nextDigit;
-        if(sum<0){
+        if (sum < 0) {
             carry = -1;
-            nextDigit = new Num(sum+base);
-        }else {
-            nextDigit = new Num(sum%base);
-            carry = sum/base;
+            nextDigit = new Num(sum + base);
+        } else {
+            nextDigit = new Num(sum % base);
+            carry = sum / base;
         }
 
-        if((null!=a.next)&&(null!=b.next)){
-            nextDigit.next = subtract(a.next,b.next,carry);
+        if ((null != a.next) && (null != b.next)) {
+            nextDigit.next = subtract(a.next, b.next, carry);
             nextDigit.negsign = nextDigit.next.negsign;
-        }else if(null!=a.next){
-            nextDigit.next = subtract(a.next,carry);
+        } else if (null != a.next) {
+            nextDigit.next = subtract(a.next, carry);
             nextDigit.negsign = nextDigit.next.negsign;
-        }else if(null!=b.next){
-            nextDigit.next = subtract(b.next,carry);
+        } else if (null != b.next) {
+            nextDigit.next = subtract(b.next, carry);
             nextDigit.negsign = nextDigit.next.negsign;
-        }else{
-            if(carry<0){
+        } else {
+            if (carry < 0) {
                 nextDigit.negsign = true;
             }
         }
@@ -103,53 +103,54 @@ public class Num  implements Comparable<Num> {
     }
 
     static Num add(Num a, Num b) {
-        Num[] padded = padEqual(a,b);
+        Num[] padded = padEqual(a, b);
         a = padded[0];
         b = padded[1];
-        if(a.negsign&&b.negsign){
-            return negate(add(a,b,0));
-        }else if(!a.negsign&&!b.negsign){
-            return add(a,b,0);
-        }else{
+        if (a.negsign && b.negsign) {
+            return negate(add(a, b, 0));
+        } else if (!a.negsign && !b.negsign) {
+            return add(a, b, 0);
+        } else {
             Num numNext;
-            if(a.negsign){
-                numNext = subtract(b,a,0);
-            }else{
-                numNext = subtract(a,b,0);
+            if (a.negsign) {
+                numNext = subtract(b, a, 0);
+            } else {
+                numNext = subtract(a, b, 0);
             }
-            if(numNext.negsign){
+            if (numNext.negsign) {
                 getComplement(numNext);
-                numNext = add(numNext,1);
+                numNext = add(numNext, 1);
             }
             return numNext;
         }
     }
 
-    static void getComplement(Num a){
-        a.val = base-1-a.val;
-        if(null!=a.next){
+    static void getComplement(Num a) {
+        a.val = base - 1 - a.val;
+        if (null != a.next) {
             getComplement(a.next);
-        };
+        }
+        ;
     }
 
-    static Num copy(Num a){
+    static Num copy(Num a) {
         Num nextNum = new Num(a.val);
         nextNum.negsign = a.negsign;
-        if(null!=a.next){
-            nextNum.next=copy(a.next);
+        if (null != a.next) {
+            nextNum.next = copy(a.next);
         }
         return nextNum;
     }
 
-    static Num add(Num a, long carry){
+    static Num add(Num a, long carry) {
         long sum = a.val + carry;
-        Num nextDigit = new Num(sum%base);
+        Num nextDigit = new Num(sum % base);
         nextDigit.negsign = a.negsign;
-        carry = sum/base;
+        carry = sum / base;
 
-        if(null!=a.next){
-            nextDigit.next = add(a.next,carry);
-        }else {
+        if (null != a.next) {
+            nextDigit.next = add(a.next, carry);
+        } else {
             if (carry > 0) {
                 nextDigit.next = new Num(carry);
             }
@@ -158,14 +159,14 @@ public class Num  implements Comparable<Num> {
         return nextDigit;
     }
 
-    static Num subtract(Num a, long carry){
+    static Num subtract(Num a, long carry) {
         long sum = a.val - carry;
-        Num nextDigit = new Num(sum%base);
-        carry = sum/base;
+        Num nextDigit = new Num(sum % base);
+        carry = sum / base;
 
-        if(null!=a.next){
-            nextDigit.next = subtract(a.next,carry);
-        }else {
+        if (null != a.next) {
+            nextDigit.next = subtract(a.next, carry);
+        } else {
             nextDigit.val = base - 1;
             nextDigit.negsign = true;
         }
@@ -173,11 +174,11 @@ public class Num  implements Comparable<Num> {
         return nextDigit;
     }
 
-    static Num negate(Num a){
+    static Num negate(Num a) {
         a.negsign = !a.negsign;
-        if(null!=a.next){
+        if (null != a.next) {
             a.next = negate(a.next);
-            if(null==a.next.next&&a.next.val==0){
+            if (null == a.next.next && a.next.val == 0) {
                 a.next = null;
             }
         }
@@ -185,23 +186,23 @@ public class Num  implements Comparable<Num> {
     }
 
     static Num subtract(Num a, Num b) {
-        Num[] padded = padEqual(a,b);
+        Num[] padded = padEqual(a, b);
         a = padded[0];
         b = padded[1];
-        if(a.negsign&&!b.negsign){
-            return negate(add(a,b,0));
-        }else if(!a.negsign&&b.negsign){
-            return add(a,b,0);
-        }else{
+        if (a.negsign && !b.negsign) {
+            return negate(add(a, b, 0));
+        } else if (!a.negsign && b.negsign) {
+            return add(a, b, 0);
+        } else {
             Num numNext;
-            if(a.negsign){
-                numNext = subtract(b,a,0);
-            }else{
-                numNext = subtract(a,b,0);
+            if (a.negsign) {
+                numNext = subtract(b, a, 0);
+            } else {
+                numNext = subtract(a, b, 0);
             }
-            if(numNext.negsign){
+            if (numNext.negsign) {
                 getComplement(numNext);
-                numNext = add(numNext,1);
+                numNext = add(numNext, 1);
             }
             return numNext;
         }
@@ -209,22 +210,22 @@ public class Num  implements Comparable<Num> {
 
     // Implement Karatsuba algorithm for excellence credit
     static Num product(Num a, Num b) {
-        Num[] padded = padEqual(a,b);
-        if(a.negsign!=b.negsign){
-            return negate(productRecursive(copy(padded[0]),copy(padded[1]), padded[2].val));
+        Num[] padded = padEqual(a, b);
+        if (a.negsign != b.negsign) {
+            return negate(productRecursive(copy(padded[0]), copy(padded[1]), padded[2].val));
         }
-        return productRecursive(copy(padded[0]),copy(padded[1]), padded[2].val);
+        return productRecursive(copy(padded[0]), copy(padded[1]), padded[2].val);
     }
 
-    static Num[] kSplit(Num a){
+    static Num[] kSplit(Num a) {
         Num aTrackerFull = a;
         Num aTrackerHalf = a;
         Num aTrackerPrevHalf = a;
 
         long length = 0;
-        while(null!=aTrackerFull){
+        while (null != aTrackerFull) {
             length++;
-            if(length%2==0){
+            if (length % 2 == 0) {
                 aTrackerPrevHalf = aTrackerHalf;
                 aTrackerHalf = aTrackerHalf.next;
             }
@@ -233,128 +234,129 @@ public class Num  implements Comparable<Num> {
         aTrackerPrevHalf.next = null;
 
         //Hack that packages the length in the same function call
-        return new Num[]{aTrackerHalf,a,new Num(length)};
+        return new Num[]{aTrackerHalf, a, new Num(length)};
     }
 
     static Num productRecursive(Num a, Num b, long length) {
 
-        if(length==1){
+        if (length == 1) {
             long product = a.val * b.val;
             return convertToBase(product);
         }
 
         Num[] a_split = kSplit(copy(a));
         Num[] b_split = kSplit(copy(b));
-        long length1 = a_split[2].val%2==0?(a_split[2].val/2):(a_split[2].val/2+1);
-        long length2 = a_split[2].val/2;;
+        long length1 = a_split[2].val % 2 == 0 ? (a_split[2].val / 2) : (a_split[2].val / 2 + 1);
+        long length2 = a_split[2].val / 2;
+        ;
 
-        Num firstterm = productRecursive(a_split[0],b_split[0],length1);
-        Num lastterm = productRecursive(a_split[1],b_split[1],length2);
-        Num[] sumproducts = padEqual(add(a_split[0],a_split[1]),add(b_split[0],b_split[1]));
+        Num firstterm = productRecursive(a_split[0], b_split[0], length1);
+        Num lastterm = productRecursive(a_split[1], b_split[1], length2);
+        Num[] sumproducts = padEqual(add(a_split[0], a_split[1]), add(b_split[0], b_split[1]));
 
-        Num midterm = productRecursive(sumproducts[0],sumproducts[1],sumproducts[2].val);
+        Num midterm = productRecursive(sumproducts[0], sumproducts[1], sumproducts[2].val);
 
-        Num firsttermPad = padRight(firstterm,2*length2);
-        Num secondtermPad = padRight(subtract(subtract(midterm,lastterm),firstterm),length2);
+        Num firsttermPad = padRight(firstterm, 2 * length2);
+        Num secondtermPad = padRight(subtract(subtract(midterm, lastterm), firstterm), length2);
 
-        Num final_res = add(add(firsttermPad,secondtermPad),lastterm);
+        Num final_res = add(add(firsttermPad, secondtermPad), lastterm);
 
         return final_res;
     }
 
-    static Num convertToBase(long number){
-        long quotient = number/base;
-        long remainder = number%base;
+    static Num convertToBase(long number) {
+        long quotient = number / base;
+        long remainder = number % base;
 
-        if(quotient == 0){
+        if (quotient == 0) {
             return new Num(remainder);
-        }else{
+        } else {
             Num res = new Num(remainder);
             res.next = convertToBase(quotient);
             return res;
         }
     }
 
-    static Num[] padEqual(Num a, Num b){
+    static Num[] padEqual(Num a, Num b) {
         Num aTrackerFull = a;
         Num bTrackerFull = b;
         long length = 0;
 
-        while(null!=aTrackerFull&&null!=bTrackerFull){
+        while (null != aTrackerFull && null != bTrackerFull) {
             aTrackerFull = aTrackerFull.next;
             bTrackerFull = bTrackerFull.next;
             length++;
         }
 
-        if(null!=aTrackerFull){
+        if (null != aTrackerFull) {
             long padding = 0;
-            while (null!=aTrackerFull){
+            while (null != aTrackerFull) {
                 aTrackerFull = aTrackerFull.next;
                 padding++;
                 length++;
             }
-            b = padLeft(b,padding);
+            b = padLeft(b, padding);
         }
 
-        if(null!=bTrackerFull){
+        if (null != bTrackerFull) {
             long padding = 0;
-            while (null!=bTrackerFull){
+            while (null != bTrackerFull) {
                 bTrackerFull = bTrackerFull.next;
                 padding++;
                 length++;
             }
-            a = padLeft(a,padding);
+            a = padLeft(a, padding);
         }
 
         //Hack for returning length without extra call
-        return new Num[] {a,b,new Num(length)};
+        return new Num[]{a, b, new Num(length)};
     }
 
-    static Num padRight(Num a, long padding){
-        while (padding>0){
+    static Num padRight(Num a, long padding) {
+        while (padding > 0) {
             Num addendum = new Num(0);
             addendum.next = a;
             a = addendum;
-            padding --;
+            padding--;
         }
         return a;
     }
 
-    static Num padLeft(Num a, long padding){
+    static Num padLeft(Num a, long padding) {
         Num addendum = a;
-        while (null!=addendum.next){
+        while (null != addendum.next) {
             addendum = addendum.next;
         }
-        while (padding>0){
+        while (padding > 0) {
             addendum.next = new Num(0);
             addendum = addendum.next;
-            padding --;
+            padding--;
         }
         return a;
     }
 
     // Use divide and conquer
     static Num power(Num a, long n) {
-	return null;
+        return null;
     }
     /* End of Level 1 */
 
     /* Start of Level 2 */
     static Num divide(Num a, Num b) {
-	return null;
+        return null;
     }
 
     static Num mod(Num a, Num b) {
-	return null;
+        return null;
     }
 
     // Use divide and conquer
     static Num power(Num a, Num n) {
-	return null;
+        return null;
     }
 
     static Num squareRoot(Num a) {
-	return null;
+        return null;
     }
     /* End of Level 2 */
 
@@ -362,7 +364,7 @@ public class Num  implements Comparable<Num> {
     // Utility functions
     // compare "this" to "other": return +1 if this is greater, 0 if equal, -1 otherwise
     public int compareTo(Num other) {
-	return 0;
+        return 0;
     }
 
     // Output using the format "base: elements of list ..."
@@ -373,27 +375,29 @@ public class Num  implements Comparable<Num> {
 
     // Return number to a string in base 10
     public String toString() {
-	    Num tracker = this;
-	    String initial = "";
-	    while(null!=tracker){
-            initial = (Long.toString(tracker.val))+initial;
+        Num tracker = this;
+        String initial = "";
+        while (null != tracker) {
+            initial = (Long.toString(tracker.val)) + initial;
             tracker = tracker.next;
         }
-        if(this.negsign){
-            initial = "-"+initial;
+        if (this.negsign) {
+            initial = "-" + initial;
         }
         return initial;
     }
 
-    public long base() { return base; }
+    public long base() {
+        return base;
+    }
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
 //        Num test = new Num("11");
         Num test = new Num("-111111");
         Num test2 = new Num("100");
 //        Num test2 = new Num("0");
 //        Num testm = product(test, test2);
         Num testm = subtract(test, test2);
-        int a =1;
+        int a = 1;
     }
 }
