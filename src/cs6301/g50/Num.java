@@ -158,6 +158,23 @@ public class Num  implements Comparable<Num> {
         return nextDigit;
     }
 
+    static Num removePadding(Num a){
+        if(null!=a.next) {
+            a.next = removePadding(a.next);
+            if(null==a.next){
+                if(a.val==0){
+                    return null;
+                }
+            }
+            return a;
+        }else{
+            if(a.val==0){
+                return null;
+            }
+            return a;
+        }
+    }
+
     static Num subtract(Num a, long carry){
         long sum = a.val - carry;
         Num nextDigit = new Num(sum%base);
@@ -211,9 +228,9 @@ public class Num  implements Comparable<Num> {
     static Num product(Num a, Num b) {
         Num[] padded = padEqual(a,b);
         if(a.negsign!=b.negsign){
-            return negate(productRecursive(copy(padded[0]),copy(padded[1]), padded[2].val));
+            return negate(removePadding(productRecursive(copy(padded[0]),copy(padded[1]), padded[2].val)));
         }
-        return productRecursive(copy(padded[0]),copy(padded[1]), padded[2].val);
+        return removePadding(productRecursive(copy(padded[0]),copy(padded[1]), padded[2].val));
     }
 
     static Num[] kSplit(Num a){
@@ -335,13 +352,50 @@ public class Num  implements Comparable<Num> {
 
     // Use divide and conquer
     static Num power(Num a, long n) {
-	return null;
+        if(n==0)
+            return new Num(0);
+        if (n == 1)
+            return a;
+        if(n%2==0){
+            Num pow = power(a, n / 2);
+            return product(pow ,pow);
+        }
+        else{
+            Num pow = power(a,n/2);
+            return product(product(pow ,pow),a);
+        }
     }
     /* End of Level 1 */
 
     /* Start of Level 2 */
     static Num divide(Num a, Num b) {
-	return null;
+
+        return divideR(a,b)[0];
+    }
+
+    static Num[] divideR(Num a, Num b) {
+
+        if (b.compareTo(a)<0){
+            if(null!=a.next){
+                if (b.compareTo(a.next)<0){
+                    Num[] nextQR = divideR(a.next,b);
+                    Num quarry = nextQR[1];
+                    quarry.next =
+                }else{
+                    Num start = copy(a);
+                    Num quotient = new Num(0);
+                    while(start.compareTo(b)>=1){
+
+                    }
+
+                }
+            }
+
+
+
+        }
+
+        return null;
     }
 
     static Num mod(Num a, Num b) {
@@ -362,7 +416,49 @@ public class Num  implements Comparable<Num> {
     // Utility functions
     // compare "this" to "other": return +1 if this is greater, 0 if equal, -1 otherwise
     public int compareTo(Num other) {
-	return 0;
+	    if(null!=next&&null!=other.next){
+            int prev = next.compareTo(other.next);
+            if(prev==0){
+                if(val==other.val){
+                    return 0;
+                }else{
+                    return val>other.val?1:-1;
+                }
+            }
+            return prev;
+        }else if(null!=next){
+            if(other.val==val){
+                Num tracker = next;
+                while(null!=tracker){
+                    if(tracker.val>0){
+                        return 1;
+                    }else{
+                        tracker = tracker.next;
+                    }
+                }
+                return 0;
+            }
+	        return 1;
+        }else if(null!=other.next){
+            if(other.val==val){
+                Num tracker = other.next;
+                while(null!=tracker){
+                    if(tracker.val>0){
+                        return -1;
+                    }else{
+                        tracker = tracker.next;
+                    }
+                }
+                return 0;
+            }
+            return -1;
+        }else{
+            if(val==other.val){
+                return 0;
+            }else{
+                return val>other.val?1:-1;
+            }
+        }
     }
 
     // Output using the format "base: elements of list ..."
@@ -389,11 +485,13 @@ public class Num  implements Comparable<Num> {
 
     public static void main(String args[]){
 //        Num test = new Num("11");
-        Num test = new Num("-111111");
-        Num test2 = new Num("100");
+        Num test = new Num("17");
+        Num test2 = new Num("18080");
 //        Num test2 = new Num("0");
 //        Num testm = product(test, test2);
-        Num testm = subtract(test, test2);
+//        int num = test2.compareTo(test);
+        Num testm = power(test, 7);
+//        removePadding(testm);
         int a =1;
     }
 }
