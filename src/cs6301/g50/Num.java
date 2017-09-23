@@ -50,6 +50,10 @@ public class Num  implements Comparable<Num> {
     }
 
     Num(long x) {
+        if(x>base){
+            next = new Num(x/base);
+            x = x%base;
+        }
         if(x<0){
             val = -1*x;
             negsign = true;
@@ -521,6 +525,7 @@ public class Num  implements Comparable<Num> {
 //        int num = test2.compareTo(test);
 //        Num testm = power(test, 7);
 //        removePadding(testm);
+        test = new Num(50000);
         int a =1;
     }
 }
