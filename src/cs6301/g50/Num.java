@@ -422,7 +422,13 @@ public class Num  implements Comparable<Num> {
     }
 
     static Num mod(Num a, Num b) {
-	return null;
+        if(a.compareTo(new Num(0))==0){
+            return a;
+        }
+        if(b.compareTo(new Num(0))==0){
+            throw new IllegalArgumentException("Argument 'divisor' is 0");
+        }
+        return divideR(removePadding(a),removePadding(b))[1];
     }
 
     // Use divide and conquer
@@ -508,7 +514,7 @@ public class Num  implements Comparable<Num> {
 
     public static void main(String args[]){
 //        Num test = new Num("11");
-        Num test = new Num("0");
+        Num test = new Num("200000");
         Num test2 = new Num("44");
 //        Num test2 = new Num("0");
         Num testm = divide(test, test2);
