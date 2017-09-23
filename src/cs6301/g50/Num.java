@@ -35,6 +35,10 @@ public class Num  implements Comparable<Num> {
             }
         }
     }
+    
+    boolean hasNext(){
+        return next!=null?true:false;
+    }
 
     Num(ArrayList<Character> char_s, boolean negsign) {
         this.val = Character.getNumericValue(char_s.get(char_s.size()-1));
@@ -60,11 +64,11 @@ public class Num  implements Comparable<Num> {
         Num nextDigit = new Num(sum%base);
         carry = sum/base;
 
-        if((null!=a.next)&&(null!=b.next)){
+        if((a.hasNext())&&(b.hasNext())){
             nextDigit.next = add(a.next,b.next,carry);
-        }else if(null!=a.next){
+        }else if(a.hasNext()){
             nextDigit.next = add(a.next,carry);
-        }else if(null!=b.next){
+        }else if(b.hasNext()){
             nextDigit.next = add(b.next,carry);
         }else{
             if(carry>0){
@@ -85,13 +89,13 @@ public class Num  implements Comparable<Num> {
             carry = sum/base;
         }
 
-        if((null!=a.next)&&(null!=b.next)){
+        if((a.hasNext())&&(b.hasNext())){
             nextDigit.next = subtract(a.next,b.next,carry);
             nextDigit.negsign = nextDigit.next.negsign;
-        }else if(null!=a.next){
+        }else if(a.hasNext()){
             nextDigit.next = subtract(a.next,carry);
             nextDigit.negsign = nextDigit.next.negsign;
-        }else if(null!=b.next){
+        }else if(b.hasNext()){
             nextDigit.next = subtract(b.next,carry);
             nextDigit.negsign = nextDigit.next.negsign;
         }else{
@@ -127,7 +131,7 @@ public class Num  implements Comparable<Num> {
 
     static void getComplement(Num a){
         a.val = base-1-a.val;
-        if(null!=a.next){
+        if(a.hasNext()){
             getComplement(a.next);
         };
     }
@@ -135,7 +139,7 @@ public class Num  implements Comparable<Num> {
     static Num copy(Num a){
         Num nextNum = new Num(a.val);
         nextNum.negsign = a.negsign;
-        if(null!=a.next){
+        if(a.hasNext()){
             nextNum.next=copy(a.next);
         }
         return nextNum;
@@ -147,7 +151,7 @@ public class Num  implements Comparable<Num> {
         nextDigit.negsign = a.negsign;
         carry = sum/base;
 
-        if(null!=a.next){
+        if(a.hasNext()){
             nextDigit.next = add(a.next,carry);
         }else {
             if (carry > 0) {
@@ -159,7 +163,7 @@ public class Num  implements Comparable<Num> {
     }
 
     static Num removePadding(Num a){
-        if(null!=a.next) {
+        if(a.hasNext()) {
             a.next = removePadding(a.next);
             if(null==a.next){
                 if(a.val==0){
@@ -180,7 +184,7 @@ public class Num  implements Comparable<Num> {
         Num nextDigit = new Num(sum%base);
         carry = sum/base;
 
-        if(null!=a.next){
+        if(a.hasNext()){
             nextDigit.next = subtract(a.next,carry);
         }else {
             nextDigit.val = base - 1;
@@ -192,7 +196,7 @@ public class Num  implements Comparable<Num> {
 
     static Num negate(Num a){
         a.negsign = !a.negsign;
-        if(null!=a.next){
+        if(a.hasNext()){
             a.next = negate(a.next);
             if(null==a.next.next&&a.next.val==0){
                 a.next = null;
@@ -369,33 +373,52 @@ public class Num  implements Comparable<Num> {
 
     /* Start of Level 2 */
     static Num divide(Num a, Num b) {
-
-        return divideR(a,b)[0];
+        if(a.compareTo(new Num(0))==0){
+            return a;
+        }
+        if(b.compareTo(new Num(0))==0){
+            throw new IllegalArgumentException("Argument 'divisor' is 0");
+        }
+        return divideR(removePadding(a),removePadding(b))[0];
     }
 
     static Num[] divideR(Num a, Num b) {
-
         if (b.compareTo(a)<0){
-            if(null!=a.next){
+            if(a.hasNext()){
                 if (b.compareTo(a.next)<0){
                     Num[] nextQR = divideR(a.next,b);
-                    Num quarry = nextQR[1];
-                    quarry.next =
+                    Num start = new Num(a.val);
+                    start.next = nextQR[1];
+                    Num quotient = new Num(0);
+                    while(start.compareTo(b)>=0){
+                        quotient = add(quotient,1);
+                        start = subtract(start,b);
+                    }
+                    quotient.next = nextQR[0];
+                    return new Num[]{quotient, start};
                 }else{
                     Num start = copy(a);
                     Num quotient = new Num(0);
-                    while(start.compareTo(b)>=1){
-
+                    while(start.compareTo(b)>=0){
+                        quotient = add(quotient,1);
+                        start = subtract(start,b);
                     }
-
+                    return new Num[]{quotient,start};
                 }
+            }else{
+                Num start = copy(a);
+                Num quotient = new Num(0);
+                while(start.compareTo(b)>=0){
+                    quotient = add(quotient,1);
+                    start = subtract(start,b);
+                }
+                return new Num[]{quotient,start};
             }
-
-
-
+        }else if(b.compareTo(a)>0){
+            return new Num[]{new Num(0),copy(a)};
+        }else{
+            return new Num[]{new Num(1),new Num(0)};
         }
-
-        return null;
     }
 
     static Num mod(Num a, Num b) {
@@ -416,7 +439,7 @@ public class Num  implements Comparable<Num> {
     // Utility functions
     // compare "this" to "other": return +1 if this is greater, 0 if equal, -1 otherwise
     public int compareTo(Num other) {
-	    if(null!=next&&null!=other.next){
+	    if(hasNext()&&other.hasNext()){
             int prev = next.compareTo(other.next);
             if(prev==0){
                 if(val==other.val){
@@ -426,7 +449,7 @@ public class Num  implements Comparable<Num> {
                 }
             }
             return prev;
-        }else if(null!=next){
+        }else if(hasNext()){
             if(other.val==val){
                 Num tracker = next;
                 while(null!=tracker){
@@ -439,7 +462,7 @@ public class Num  implements Comparable<Num> {
                 return 0;
             }
 	        return 1;
-        }else if(null!=other.next){
+        }else if(other.hasNext()){
             if(other.val==val){
                 Num tracker = other.next;
                 while(null!=tracker){
@@ -485,12 +508,12 @@ public class Num  implements Comparable<Num> {
 
     public static void main(String args[]){
 //        Num test = new Num("11");
-        Num test = new Num("17");
-        Num test2 = new Num("18080");
+        Num test = new Num("0");
+        Num test2 = new Num("44");
 //        Num test2 = new Num("0");
-//        Num testm = product(test, test2);
+        Num testm = divide(test, test2);
 //        int num = test2.compareTo(test);
-        Num testm = power(test, 7);
+//        Num testm = power(test, 7);
 //        removePadding(testm);
         int a =1;
     }
