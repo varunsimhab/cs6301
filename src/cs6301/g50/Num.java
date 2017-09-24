@@ -179,7 +179,7 @@ public class Num  implements Comparable<Num> {
     static Num removePadding(Num a){
         if(a.hasNext()) {
             a.next = removePadding(a.next);
-            if(null==a.next && a.val==0)
+            if(a.next==null && a.val==0)
                 return null;
             return a;
         }else{
@@ -459,15 +459,29 @@ public class Num  implements Comparable<Num> {
     		return new Num(1);
     	if(n.compareTo(new Num(1))==0)
     		return a;
-    	if(mod(n,new Num(2)).compareTo(new Num(0))==0)
+    	Num temp = mod(n,new Num(2));
+    	if(temp.compareTo(new Num(0))==0)
     	    return power(product(a,a),divide(n,new Num(2)));
     	else
     		return product(a,power(product(a,a),divide(n,new Num(2))));
     }
 
     /*returns the square root of 'a' (truncated)*/
-    static Num squareRoot(Num a) {
-	return null;
+    static Num squareRoot(Num a) {   	
+    	Num begin = new Num(1);
+    	Num end = divide(a,new Num(2));
+    	while(true) {
+    		if(begin.compareTo(end)>=0)
+    			return begin;
+    		Num mid  = divide(add(begin,end),new Num(2));
+    		Num temp = product(mid,mid);
+    	    if(temp.compareTo(a)==0)
+    		    return mid;
+    	    else if (temp.compareTo(a) > 0)
+    	    	end = subtract(mid, new Num(1));
+    	    else
+    	    	begin = mid;    
+    	}
     }
 
 
@@ -481,22 +495,20 @@ public class Num  implements Comparable<Num> {
 	    if(hasNext()&&other.hasNext()){
             int prev = next.compareTo(other.next);
             if(prev==0){
-                if(val==other.val){
+                if(val==other.val)
                     return 0;
-                }else{
+                else
                     return val>other.val?1:-1;
-                }
             }
             return prev;
         }else if(hasNext()){
             if(other.val==val){
                 Num tracker = next;
                 while(null!=tracker){
-                    if(tracker.val>0){
+                    if(tracker.val>0)
                         return 1;
-                    }else{
+                    else
                         tracker = tracker.next;
-                    }
                 }
                 return 0;
             }
