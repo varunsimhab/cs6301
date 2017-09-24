@@ -374,17 +374,13 @@ public class Num  implements Comparable<Num> {
     // Use divide and conquer
     static Num power(Num a, long n) {
         if(n==0)
-            return new Num(0);
+            return new Num(1);
         if (n == 1)
             return a;
-        if(n%2==0){
-            Num pow = power(a, n / 2);
-            return product(pow ,pow);
-        }
-        else{
-            Num pow = power(a,n/2);
-            return product(product(pow ,pow),a);
-        }
+        if(n%2==0)
+            return power(product(a,a), n / 2);
+        else
+            return product(a,power(product(a,a), n / 2));
     }
     
     
@@ -459,13 +455,20 @@ public class Num  implements Comparable<Num> {
 
     
     
-    // Use divide and conquer
+    /* returns a^n, where a and n are both Num */
     static Num power(Num a, Num n) {
-	return null;
+    	if(n.compareTo(new Num(0))==0)
+    		return new Num(1);
+    	if(n.compareTo(new Num(1))==0)
+    		return a;
+    	if(mod(n,new Num(2)).compareTo(new Num(0))==0)
+    	    return power(product(a,a),divide(n,new Num(2)));
+    	else
+    		return product(a,power(product(a,a),divide(n,new Num(2))));
     }
 
     
-    
+    /*returns the square root of 'a' (truncated)*/
     static Num squareRoot(Num a) {
 	return null;
     }
