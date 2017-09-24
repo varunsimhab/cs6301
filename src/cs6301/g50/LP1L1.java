@@ -5,8 +5,8 @@ package cs6301.g50;
 
 public class LP1L1 {
     public static void main(String[] args) {
-	Num x = new Num(999);
-	Num y = new Num("8");
+	Num x = new Num(35);
+	Num y = new Num("28");
 	Num z = Num.add(x, y);
 	System.out.println(z);
 	Num a = Num.power(x, 8);
