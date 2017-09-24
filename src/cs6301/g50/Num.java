@@ -453,8 +453,6 @@ public class Num  implements Comparable<Num> {
         return divideR(removePadding(a),removePadding(b))[1];
     }
 
-
-
     /* returns a^n, where a and n are both Num */
     static Num power(Num a, Num n) {
     	if(n.compareTo(new Num(0))==0)
@@ -466,7 +464,6 @@ public class Num  implements Comparable<Num> {
     	else
     		return product(a,power(product(a,a),divide(n,new Num(2))));
     }
-
 
     /*returns the square root of 'a' (truncated)*/
     static Num squareRoot(Num a) {
