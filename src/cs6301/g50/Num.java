@@ -234,11 +234,11 @@ public class Num  implements Comparable<Num> {
 
     // Implement Karatsuba algorithm for excellence credit
     static Num product(Num a, Num b) {
-        Num[] padded = padEqual(a,b);
+        Num[] padded = padEqual(copy(a),copy(b));
         if(a.negsign!=b.negsign){
-            return negate(removePadding(productRecursive(copy(padded[0]),copy(padded[1]), padded[2].val)));
+            return negate(removePadding(productRecursive(padded[0],padded[1], padded[2].val)));
         }
-        return removePadding(productRecursive(copy(padded[0]),copy(padded[1]), padded[2].val));
+        return removePadding(productRecursive(padded[0],padded[1], padded[2].val));
     }
 
     static Num[] kSplit(Num a){
@@ -383,7 +383,7 @@ public class Num  implements Comparable<Num> {
         if(b.compareTo(new Num(0))==0){
             throw new IllegalArgumentException("Argument 'divisor' is 0");
         }
-        return divideR(removePadding(a),removePadding(b))[0];
+        return divideR(removePadding(copy(a)),removePadding(copy(b)))[0];
     }
 
     static Num[] divideR(Num a, Num b) {
@@ -521,7 +521,7 @@ public class Num  implements Comparable<Num> {
         Num test = new Num("200000");
         Num test2 = new Num("44");
 //        Num test2 = new Num("0");
-        Num testm = divide(test, test2);
+        Num testm = product(test, test2);
 //        int num = test2.compareTo(test);
 //        Num testm = power(test, 7);
 //        removePadding(testm);
