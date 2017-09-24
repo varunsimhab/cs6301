@@ -244,10 +244,10 @@ public class Num  implements Comparable<Num> {
 
     // Implement Karatsuba algorithm for excellence credit
     static Num product(Num a, Num b) {
-        Num[] padded = padEqual(a,b);
+        Num[] padded = padEqual(copy(a),copy(b));
         if(a.negsign!=b.negsign)
-            return negate(removePadding(productRecursive(copy(padded[0]),copy(padded[1]), padded[2].val)));
-        return removePadding(productRecursive(copy(padded[0]),copy(padded[1]), padded[2].val));
+            return negate(removePadding(productRecursive(padded[0],padded[1], padded[2].val)));
+        return removePadding(productRecursive(padded[0],padded[1], padded[2].val));
     }
 
 
@@ -397,7 +397,7 @@ public class Num  implements Comparable<Num> {
             return a;
         if(b.compareTo(new Num(0))==0)
             throw new IllegalArgumentException("Argument 'divisor' is 0");
-        return divideR(removePadding(a),removePadding(b))[0];
+        return divideR(removePadding(copy(a)),removePadding(copy(b)))[0];
     }
 
 
