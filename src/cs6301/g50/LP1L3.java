@@ -18,11 +18,17 @@ import java.util.Stack;
 import java.util.regex.Pattern;
 
 public class LP1L3 {
-	ArrayList<Num> numFinalList = new ArrayList<Num>();
-	Num tempList[] = new Num[26];
+	ArrayList<Num> numFinalList = new ArrayList<Num>(); // Stores the final output values that will be 
+	                                                    // printed on the console.
+	Num tempList[] = new Num[26]; //stores the value of each variable.
     
 
-	
+	/* 
+	   Evaluates each line of input of the following two forms,
+	   - 'var' or 'var=<value>'   and
+	   - 'var=<postfixexpression>'
+	   Post-fix expressions are evaluated by means of a stack<Num>. 
+    */
     public void evaluate(String line) {
     	if(line.length()==1) {
     		int index = Character.getNumericValue(line.charAt(0)) -  Character.getNumericValue('a');
@@ -90,6 +96,12 @@ public class LP1L3 {
 	 
     
     
+    /* 
+       Prints the output values of each expression.  At the end, internal representation of the 
+       last variable that was assigned a value is printed.      
+       For expressions of the form 'var ;' ,value of the variable is printed;
+       For expressions of the form 'var = postfix expression;' ,value of the evaluated expression is printed;
+    */
     public void printResult() {
     	int i;
         for(i=0;i<numFinalList.size();i++)
@@ -98,7 +110,11 @@ public class LP1L3 {
     }
     
     
-    
+    /* 
+       Driver method for Level 3. 
+       Post-fix expressions are expected to contain ONLY the operators {+, -, *, /, %, ^, |} along with
+	   variables and integer constants ( [0-9]* ). Presence of other characters can result in exceptions. 
+    */
 	public static void main(String[] args) throws FileNotFoundException{
     	   Scanner in;
     	   if (args.length > 0) {
@@ -109,11 +125,11 @@ public class LP1L3 {
 
 	       LP1L3 x = new LP1L3();	
 	       while(in.hasNext()) {
-	            String line = in.nextLine();
-	            line = line.replaceAll("\\s","");
+	            String line = in.nextLine(); // read line by line
+	            line = line.replaceAll("\\s",""); // Remove all spaces in the expression.
 	            if(line.equals(";"))
 	            	break;
-	            line = line.substring(0, line.length() - 1);
+	            line = line.substring(0, line.length() - 1); // Remove ';' from the expression.
                 x.evaluate(line);
 	       }
 	       x.printResult();
