@@ -565,6 +565,14 @@ public class Num  implements Comparable<Num> {
     // For example, if base=100, and the number stored corresponds to 10965,
     // then the output is "100: 65 9 1"
     void printList() {
+    	System.out.print(base() + ": ");
+    	Num temp = this;
+    	System.out.print(temp.val + " ");
+    	while(temp.hasNext()) {
+    		temp = temp.next;
+    		System.out.print(temp.val + " ");
+    	}
+    	System.out.println("\n");    	
     }
 
 

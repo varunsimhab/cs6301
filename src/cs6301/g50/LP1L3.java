@@ -91,8 +91,10 @@ public class LP1L3 {
     
     
     public void printResult() {
-        for(Num tp:numFinalList)
-        	System.out.println(tp);
+    	int i;
+        for(i=0;i<numFinalList.size();i++)
+        	System.out.println(numFinalList.get(i));
+        numFinalList.get(i-1).printList();
     }
     
     
