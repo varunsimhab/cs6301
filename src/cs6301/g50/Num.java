@@ -109,10 +109,14 @@ public class Num  implements Comparable<Num> {
             nextDigit.negsign = nextDigit.next.negsign;
         }else if(a.hasNext()){
             nextDigit.next = subtract(a.next,carry);
-            nextDigit.negsign = nextDigit.next.negsign;
+            if(nextDigit.hasNext()){
+                nextDigit.negsign = nextDigit.next.negsign;
+            }
         }else if(b.hasNext()){
-            nextDigit.next = subtract(b.next,carry);
-            nextDigit.negsign = nextDigit.next.negsign;
+            nextDigit.next = subtract(new Num(0), b.next,carry);
+            if(nextDigit.hasNext()){
+                nextDigit.negsign = nextDigit.next.negsign;
+            }
         }else if(carry<0)
             nextDigit.negsign = true;
         return nextDigit;
@@ -121,9 +125,6 @@ public class Num  implements Comparable<Num> {
 
 
     static Num add(Num a, Num b) {
-        Num[] padded = padEqual(a,b);
-        a = padded[0];
-        b = padded[1];
         if(a.negsign&&b.negsign)
             return negate(add(a,b,0));
         else if(!a.negsign&&!b.negsign)
@@ -192,15 +193,22 @@ public class Num  implements Comparable<Num> {
 
 
     static Num subtract(Num a, long carry){
-        long sum = a.val - carry;
-        Num nextDigit = new Num(sum%base);
-        carry = sum/base;
-        if(a.hasNext())
-            nextDigit.next = subtract(a.next,carry);
-        else {
-            nextDigit.val = base - 1;
-            nextDigit.negsign = true;
+        long sum = a.val + carry;
+        Num nextDigit;
+        if(sum<0){
+            carry = -1;
+            nextDigit = new Num(sum+base);
+        }else {
+            nextDigit = new Num(sum%base);
+            carry = sum/base;
         }
+        if(a.hasNext()){
+            nextDigit.next = subtract(a.next,carry);
+            if(nextDigit.hasNext()){
+                nextDigit.negsign = nextDigit.next.negsign;
+            }
+        }else if(carry<0)
+            nextDigit.negsign = true;
         return nextDigit;
     }
 
@@ -219,9 +227,6 @@ public class Num  implements Comparable<Num> {
 
 
     static Num subtract(Num a, Num b) {
-        Num[] padded = padEqual(a,b);
-        a = padded[0];
-        b = padded[1];
         if(a.negsign&&!b.negsign)
             return negate(add(a,b,0));
         else if(!a.negsign&&b.negsign)
@@ -511,8 +516,17 @@ public class Num  implements Comparable<Num> {
                         tracker = tracker.next;
                 }
                 return 0;
+            } else if(other.val>val){
+                Num tracker = next;
+                while(null!=tracker){
+                    if(tracker.val>0)
+                        return 1;
+                    else
+                        tracker = tracker.next;
+                }
+                return -1;
             }
-	        return 1;
+            return 1;
         }else if(other.hasNext()){
             if(other.val==val){
                 Num tracker = other.next;
@@ -524,6 +538,16 @@ public class Num  implements Comparable<Num> {
                     }
                 }
                 return 0;
+            }else if(val>other.val){
+                Num tracker = other.next;
+                while(null!=tracker){
+                    if(tracker.val>0){
+                        return -1;
+                    }else{
+                        tracker = tracker.next;
+                    }
+                }
+                return 1;
             }
             return -1;
         }else{
@@ -567,14 +591,14 @@ public class Num  implements Comparable<Num> {
 
     public static void main(String args[]){
 //        Num test = new Num("11");
-        Num test = new Num("200000");
-        Num test2 = new Num("44");
+        Num test = new Num("9");
+        Num test2 = new Num("-91");
 //        Num test2 = new Num("0");
-        Num testm = divide(test, test2);
-//        int num = test2.compareTo(test);
-//        Num testm = power(test, 7);
+//        Num testm = add(test, test2);
+        int num = test2.compareTo(test);
+        Num testm = power(test, 7);
 //        removePadding(testm);
-        test = new Num(50000);
+//        test = new Num(50000);
         int a =1;
     }
 }
