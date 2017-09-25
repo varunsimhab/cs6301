@@ -33,25 +33,32 @@ public class LP1L3 {
     		Stack<Num> st = new Stack<Num>();    		
     		for(int i=2;i<line.length();i++) {
     			char c = line.charAt(i); 
+    			Num a,b;
     			switch (c){
     				    case '+':
     					    st.push(Num.add(st.pop(),st.pop()));
     					    break;
     				    case '-':
-    					    st.push(Num.subtract(st.pop(),st.pop()));
+    				    	a = st.pop();
+    				    	b = st.pop();
+    					    st.push(Num.subtract(b,a));
     					    break;
     				    case '*':
     					    st.push(Num.product(st.pop(),st.pop()));
     					    break;
     				    case '/':
-    					    st.push(Num.divide(st.pop(),st.pop()));
+    				    	a = st.pop();
+    				    	b = st.pop();
+    					    st.push(Num.divide(b,a));
     					    break;
     				    case '%':
-    					    st.push(Num.mod(st.pop(),st.pop()));
+    				    	a = st.pop();
+    				    	b = st.pop();
+    					    st.push(Num.mod(b,a));
     					    break;
     				    case '^':
-    				    	Num a = st.pop();
-    				    	Num b = st.pop();
+    				    	a = st.pop();
+    				    	b = st.pop();
     					    st.push(Num.power(b,a));
     					    break;
     				    case '|':
