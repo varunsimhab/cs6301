@@ -15,7 +15,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
-import java.util.regex.Pattern;
 
 public class LP1L3 {
 	ArrayList<Num> numFinalList = new ArrayList<Num>();
