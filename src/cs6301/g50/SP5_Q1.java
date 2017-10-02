@@ -8,6 +8,7 @@
  * Sunit Mathew
  **/
 
+
 /*
     Driver Program for SP5 Question-1. Run Time is displayed at the end after execution of this program.
  */
@@ -33,8 +34,9 @@
  * Even for 100,000 needs a lot of stack memory.
  */
 
-
+package cs6301.g50;
 public class SP5_Q1 {
+	
     public static void main(String[] args){
         int arraySize = 1000000;
         qSort q= new qSort();
@@ -51,9 +53,7 @@ public class SP5_Q1 {
          1) Partition 1 (Lomuto's partition) : pass "false" in   q.quickSort(a,true);
          2) Partition 2 (Hoare's partition) : pass "true" in   q.quickSort(a,true);
         */
-
         // Shuffles the array before sorting.
-
         s.shuffle(a);  // Comment this if need to test decreasing order of number
         t.start();
         q.quickSort(a,true); // default "true" means partition 1

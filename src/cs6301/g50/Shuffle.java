@@ -2,8 +2,17 @@
 /** @author rbk : based on algorithm described in a book
  *  Ver 1.0: 2017/08/08
  *  Ver 1.1: 2017/08/28.  Updated some methods to public.  Added shuffle for int[]
+ *  
+ * Code used by
+ * Group 50
+ *
+ * Varun Simha Balaraju
+ * Venkata Sarath Chandra Prasad Nelapati
+ * Jithin Paul
+ * Sunit Mathew
  */
 
+package cs6301.g50;
 import java.util.Random;
 
 /* Shuffle the elements of an array arr[from..to] randomly */

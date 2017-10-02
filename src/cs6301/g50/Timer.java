@@ -7,9 +7,8 @@
  *          timer.end();
  *          System.out.println(timer);  // output statistics
  *  Corrected memory calculations to 1048576 instead of 1000000
- */
-
-/**
+ *
+ *
  * Timer code used by
  * Group 50
  *
@@ -19,6 +18,7 @@
  * Sunit Mathew
  **/
 
+package cs6301.g50;
 public class Timer {
     long startTime, endTime, elapsedTime, memAvailable, memUsed;
 
