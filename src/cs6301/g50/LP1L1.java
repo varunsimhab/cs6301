@@ -5,20 +5,20 @@ package cs6301.g50;
 
 public class LP1L1 {
     public static void main(String[] args) {
-	Num a = new Num("500542");
-	Num b = new Num("1000234234");
+	Num a = new Num("48");
+	//Num b = new Num("1000234234");
 	//System.out.println(x.compareTo(y));
-	Num c = Num.product(a, b);
-	Num d = Num.divide(c, b);
+	//Num c = Num.product(a, b);
+	//Num d = Num.divide(c, b);
 	//Num e = Num.power(d, a);
 	
-	System.out.println(a);	
-	System.out.println(b);
-	System.out.println(c);	
-	System.out.println(d);
+	//System.out.println(a);	
+	//System.out.println(b);
+	//System.out.println(c);	
+	//System.out.println(d);
 	//System.out.println(e);	
-	//Num a = Num.squareRoot(x);
-	//System.out.println(a);
+	Num e = Num.squareRoot(a);
+	System.out.println(e);
 	//System.out.println(x);	
 	//System.out.println(y);
 	//System.out.println(z);
@@ -41,6 +41,6 @@ public class LP1L1 {
 	//System.out.println(b);
 	//System.out.println(c);
 	//System.out.println(e);
-	c.printList();
+	//c.printList();
     }
 }

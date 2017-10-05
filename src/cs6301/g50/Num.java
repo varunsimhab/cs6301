@@ -472,21 +472,25 @@ public class Num  implements Comparable<Num> {
     }
 
     /*returns the square root of 'a' (truncated)*/
-    static Num squareRoot(Num a) {   	
+    static Num squareRoot(Num a) {
+    	if(a.compareTo(new Num("1"))<=0)
+    		return a;
     	Num begin = new Num(1);
     	Num end = divide(a,new Num(2));
-    	while(true) {
-    		if(begin.compareTo(end)>=0)
-    			return begin;
+    	Num ret = new Num("0");
+    	while(begin.compareTo(end)<=0) {
     		Num mid  = divide(add(begin,end),new Num(2));
     		Num temp = product(mid,mid);
     	    if(temp.compareTo(a)==0)
     		    return mid;
     	    else if (temp.compareTo(a) > 0)
     	    	end = subtract(mid, new Num(1));
-    	    else
-    	    	begin = mid;    
+    	    else {
+    	    	begin = add(mid,1); 
+    	    	ret = mid;
+    	    } 
     	}
+    	return ret;
     }
 
 
