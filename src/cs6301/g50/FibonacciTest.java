@@ -1,3 +1,5 @@
+package cs6301.g50;
+
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,8 +1,8 @@
+package cs6301.g50;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-
 
 /**
 
