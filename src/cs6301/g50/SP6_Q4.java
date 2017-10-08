@@ -1,4 +1,12 @@
-
+/**
+ * Created by
+ * Group 50
+ *
+ * Varun Simha Balaraju
+ * Venkata Sarath Chandra Prasad Nelapati
+ * Jithin Paul
+ * Sunit Mathew
+ **/
 
 
 
@@ -85,7 +93,7 @@ public class SP6_Q4 extends GraphAlgorithm<SP6_Q4.primVertex> {
                 v = e.from;
             }
 
-            visitV(u, v); // will also set the parent
+            visitV(u, v); // will also set the parent of v as u apart from marking v as visited.
             wmst += e.weight;  // Counting the total weight of MST to be returned later.
 
             for (Graph.Edge e2 : v.adj) {
