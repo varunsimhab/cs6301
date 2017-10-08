@@ -140,6 +140,8 @@ public class SP6_Q4 extends GraphAlgorithm<SP6_Q4.primVertex> {
        Picture for the graph used for this example is included in the submission.
      */
     public static void main(String [] args){
+        
+        // MST weight for the below Graph is 42 (picture included in submission).
         String s ="7 11\n" +
                 "1 2 5\n" +
                 "2 3 13\n" +
