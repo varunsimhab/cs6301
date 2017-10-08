@@ -14,6 +14,8 @@ import cs6301.g50.Graph.Edge;
 import cs6301.g50.Graph.Vertex;
 import java.util.LinkedList;
 
+
+
 public class Euler{
     int VERBOSE;    
     Graph g;
@@ -30,19 +32,13 @@ public class Euler{
         this.g = g; 
         this.startVertex=start;
         
-        // Create EulerVertices from GraphVertices
+        // Create EulerVertices from GraphVertices.
 	    ev = new EulerVertex[g.size()];
-        for(Vertex u: g)
-            ev[u.getName()] = new EulerVertex(u);
-
-	    // Create EulerEdges from GraphEdges
-	    for(Vertex u: g) {
-	        for(Edge e: u) {
-		        Vertex v = e.otherEnd(u);
-		        EulerVertex e1 = getVertex(u);
-		        EulerVertex e2 = getVertex(v);
-		        e1.eadj.add(new EulerEdge(e,e1,e2));
-	        }
+        for(Vertex u: g) {
+        	EulerVertex newEv = new EulerVertex(u);
+            ev[u.getName()] = newEv;
+	        for(Edge e: u)
+		        newEv.eadj.add(e);
 	    }
     }
      
@@ -51,7 +47,7 @@ public class Euler{
     public static class EulerVertex{
     	Vertex u;
     	boolean finishTour;
-    	List<EulerEdge> eadj;
+    	List<Graph.Edge> eadj;
     	List<Graph.Edge> tour;
     	
     	EulerVertex(Vertex u) {
@@ -63,36 +59,6 @@ public class Euler{
     }
     
     
-    /* Class to store information about an edge in this algorithm */
-    static class EulerEdge{
-    	Edge e;
-    	EulerVertex from;
-    	EulerVertex to;
-	    boolean disabled;
-
-	    EulerEdge(Edge e, EulerVertex from, EulerVertex to) {
-	        disabled = false;
-	        this.e = e;
-	        this.from = from;
-	        this.to= to;
-	    }
-
-	    boolean isDisabled() { return disabled;}
-	    
-	    void disable() { disabled = true; }
-	    
-	    Graph.Edge getGraphEdge() { return e; }
-	    
-	    public EulerVertex otherEnd(EulerVertex u) {
-			assert from == u || to == u;
-			if (from == u) 
-				return to;
-			else
-				return from;
-	    }
-    }
-    
-
     
     /* Function to get the corresponding Euler Vertex from a Graph Vertex */
     EulerVertex getVertex(Vertex u) {
@@ -127,8 +93,8 @@ public class Euler{
 		    return false;
 		}else {
 	        for(Graph.Vertex current: g) {
-	        	int inDegree = current.getInDegree();
-	        	int outDegree = current.getOutDegree();
+	        	int inDegree = current.revAdj.size();
+	        	int outDegree = current.adj.size();
 			    if( inDegree != outDegree ) {
 			    	System.out.println("Graph is not Eulerian");
 			    	System.out.println("Reason: inDegree = "+ inDegree + ", outDegree = " + outDegree + " at Vertex" + current);
@@ -142,29 +108,23 @@ public class Euler{
     
     
     /* Helper Function to find tours starting at vertices with unexplored edges */
-    void findTours(EulerVertex u, List<Graph.Edge> tour) {    	   	
-    	for (EulerEdge e : u.eadj) {
-    		if(!e.isDisabled()) {
-    		    tour.add(e.getGraphEdge());
-    		    e.disable();
-    		    u = e.otherEnd(u);
-			    findTours(u, tour);
-			    break;
-    		}
-		}
+    void findTours(Vertex u, List<Graph.Edge> tour) {
+    	EulerVertex eu = getVertex(u);
+    	if(eu.eadj.size()==0)
+    		return;
+        Edge e = eu.eadj.remove(0);
+        tour.add(e);
+        u = e.otherEnd(u);
+	    findTours(u, tour);
     }
     
     
     
     /* Function to find tours starting at vertices with unexplored edges */
     void findTours() {  
-    	findTours(getVertex(startVertex), getVertex(startVertex).tour);    	
-    	for(EulerVertex u : ev) {
-    		for (EulerEdge e : u.eadj) {
-    			if(!e.isDisabled())    				
-    			    findTours(u, u.tour);
-    		}
-    	}
+    	findTours(startVertex, getVertex(startVertex).tour);    	
+    	for(EulerVertex u : ev)  				
+    	    findTours(u.u, u.tour);
     }
 
     
@@ -188,23 +148,23 @@ public class Euler{
     
     
     /* Helper Function to Stitch tours into a single tour */
-    void explore(EulerVertex u){
-    	u.finishTour = true;
-    	EulerVertex tmp = u;
-    	for (Edge e : u.tour) {
+    void explore(Vertex u){
+    	EulerVertex eu = getVertex(u);
+    	eu.finishTour = true;
+    	EulerVertex tmp = eu;
+    	for (Edge e : eu.tour) {
     		tour.add(e);
     		tmp = getVertex(e.otherEnd(tmp.u));
     		if(tmp.tour.size() > 0 && !tmp.finishTour)
-    			explore(tmp);
-    	}
-    	
+    			explore(tmp.u);
+    	}   	
     }
     
     
     
     /* Function that Stitches tours into a single tour using the algorithm discussed in class */
     void stitchTours() {
-    	explore(getVertex(startVertex));
+    	explore(startVertex);
     }
 
     
