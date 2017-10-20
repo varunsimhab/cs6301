@@ -1,4 +1,7 @@
+package cs6301.g50;
+
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.Stack;
 
 /**
@@ -15,17 +18,19 @@ import java.util.Stack;
  * Sunit Mathew
  *
  */
-public class BST<T extends Comparable<T>>{
+public class BST<T extends Comparable<? super T>> implements Iterable<T> {
 
-    class Entry<T>{
+    class Entry{
         T element;
-        Entry<T> left,right;
+        Entry left,right;
         Entry(T x){
             this.element=x;
         }
     }
-    public Stack s = new Stack<Entry<T>>();
-    public Entry<T> root;
+
+    public Stack<Entry> stack = new Stack<Entry>();
+
+    public Entry root;
 
     int size;
 
@@ -39,36 +44,32 @@ public class BST<T extends Comparable<T>>{
         this.size=0;
     }
 
-    private int compare(T one,T two) {
-      return one.compareTo(two);
-    }
-
-    Entry<T> find(T x){
-        s=new Stack<Entry<T>>();
-        s.push(null);
+    Entry find(T x){
+        stack =new Stack<Entry>();
+        stack.push(null);
         return find(root,x);
     }
 
-    Entry<T> find(Entry t,T x){
-        //s.push(null);
+    Entry find(Entry t,T x){
+        //stack.push(null);
         if(t == null) return null;
         if(t.element == x) return t;
 
-        while(isLessThan(x, (T)t.element) || isGreaterThan(x, (T)t.element)){
-            if(isLessThan(x, (T)t.element)){
+        while(!x.equals(t.element)){
+            if(x.compareTo(t.element)==-1){
                 if(t.left==null){
                     return t;
                 }
 
-                s.push(t);
+                stack.push(t);
                 t=t.left;
             }
-            else if(isGreaterThan(x, (T)t.element)){
+            else if(x.compareTo(t.element)==1){
                 if(t.right==null){
                     return t;
                 }
 
-                s.push(t);
+                stack.push(t);
                 t=t.right;
             }
         }
@@ -76,22 +77,12 @@ public class BST<T extends Comparable<T>>{
         return t;
     }
 
-    private boolean isLessThan(T firstElement, T otherElement) {
-        return compare(firstElement, otherElement) == -1;
-    }
-
-    private boolean isGreaterThan(T firstElement, T otherElement) {
-        return compare(firstElement, otherElement) == 1;
-    }
-
-
-
     public boolean contains(T x){
         Entry t=find(x);
         return (t!=null&&t.element.equals(x));
     }
 
-    private <T extends Entry> T min(){
+    private T min(){
         if(root==null){
             return null;
         }
@@ -99,12 +90,12 @@ public class BST<T extends Comparable<T>>{
         while(t.left!=null){
             t=t.left;
         }
-        return (T) t.element;
+        return t.element;
 
     }
 
 
-    private <T extends Entry> T max(){
+    private T max(){
         if(root==null){
             return null;
         }
@@ -112,7 +103,7 @@ public class BST<T extends Comparable<T>>{
         while(t.right!=null){
             t=t.right;
         }
-        return (T) t.element;
+        return t.element;
 
     }
 
@@ -120,20 +111,20 @@ public class BST<T extends Comparable<T>>{
     public Boolean add(T x)
     {
         if (root == null) {
-            root=new Entry<>(x);
+            root=new Entry(x);
             size=1;
             return true;
         }
         Entry t=find(x);
-        if(compare(x,(T)t.element)==0){
+        if(x.compareTo(t.element)==0){
             t.element=x;
             return false;
         }
-        else if(compare(x,(T)t.element)==-1) {
-            t.left = new Entry<>(x);
+        else if(x.compareTo(t.element)==-1) {
+            t.left = new Entry(x);
         }
         else{
-             t.right= new Entry<>(x);
+             t.right= new Entry(x);
             }
         size++;
         return true;
@@ -147,13 +138,13 @@ public class BST<T extends Comparable<T>>{
         if(t.element!=x){
             return null;
         }
-        T result=(T)t.element;
+        T result=t.element;
         if(t.left==null||t.right==null){
             bypass(t);
         }
         else{
-            s.push(t);
-            Entry minRight=find(t.right,(T)t.element);
+            stack.push(t);
+            Entry minRight=find(t.right,t.element);
             t.element=minRight.element;
             bypass(minRight);
         }
@@ -163,9 +154,9 @@ public class BST<T extends Comparable<T>>{
 
     }
 
-    public void bypass (Entry<T> t){
+    public void bypass (Entry t){
 
-        Entry pt= (Entry)s.peek();
+        Entry pt= stack.peek();
         System.out.print(pt.element);
         Entry c=  t.left==null?t.right:t.left;
         if(pt==null){
@@ -179,17 +170,39 @@ public class BST<T extends Comparable<T>>{
         }
     }
 
-    public void iterator() {
-        iterator(root);
+    public Iterator iterator() {
+        return new BSTIterator(root);
     }
-    public void iterator(Entry<T> root){
-       BSTIterator it= new BSTIterator(root);
-        while(it.hasNext()){
-            System.out.println(it.next().element);
+
+    class BSTIterator implements Iterator {
+
+        public BSTIterator(Entry root) {
+            stack = new Stack<Entry>();
+            traverseLeft(root);
         }
+
+        /** return whether we have a next smallest number */
+        public boolean hasNext() {
+            return !stack.isEmpty();
+        }
+
+        /**
+         *  returns the next smallest number
+         * */
+
+        public T next() {
+            Entry t = stack.pop();
+            traverseLeft(t.right);
+            return t.element;
+        }
+
+        private void traverseLeft(Entry t){
+            while (t!= null) {
+                stack.push(t);
+                t = t.left;
+            }
+        }
+
+
     }
-
-
-
-
 }

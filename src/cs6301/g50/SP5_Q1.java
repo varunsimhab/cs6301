@@ -50,8 +50,8 @@ public class SP5_Q1 {
 
 
         /* To run QuickSort with
-         1) Partition 1 (Lomuto's partition) : pass "false" in   q.quickSort(a,true);
-         2) Partition 2 (Hoare's partition) : pass "true" in   q.quickSort(a,true);
+         1) Partition 1 (Lomuto'stack partition) : pass "false" in   q.quickSort(a,true);
+         2) Partition 2 (Hoare'stack partition) : pass "true" in   q.quickSort(a,true);
         */
         // Shuffles the array before sorting.
         s.shuffle(a);  // Comment this if need to test decreasing order of number

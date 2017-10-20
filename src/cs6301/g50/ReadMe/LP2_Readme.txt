@@ -24,3 +24,8 @@ Files/ Classes required to run this project
     5) GraphAlgorithm.java
     6) ArrayIterator.java
     7) Timer.java
+
+    #Readme
+    8) LP2_Readme.txt
+
+To run, run the driver function

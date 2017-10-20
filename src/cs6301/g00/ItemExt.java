@@ -35,9 +35,9 @@ public class ItemExt extends Item implements Comparator<ItemExt> {
 	                                                   ^
 	required: T[],int,int,T
 	found: ItemExt[],int,int,ItemExt
-	reason: inferred type does not conform to declared bound(s)
+	reason: inferred type does not conform to declared bound(stack)
 	inferred: ItemExt
-	bound(s): Comparable<ItemExt>
+	bound(stack): Comparable<ItemExt>
 	where T is a type-variable:
 	T extends Comparable<T> declared in method <T>badlyDeclaredBinarySearch(T[],int,int,T)
 	1 error

@@ -24,12 +24,12 @@ public class IO {
 	}
 	int s = in.nextInt();
 	float t = in.nextFloat();
-	System.out.println("s: " + s + " t: " + t);
+	System.out.println("stack: " + s + " t: " + t);
     }
 }
 /* Sample execution:
 > java cs6301.g00.IO
 15                  <---- Input line
 2.3E2               <---- Input line (in scientific notation; it is 2.3*10^2)
-s: 15 t: 230.0      <---- Output line
+stack: 15 t: 230.0      <---- Output line
 */

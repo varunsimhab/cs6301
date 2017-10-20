@@ -251,8 +251,8 @@ public class Num  implements Comparable<Num> {
     static Num product(Num a, Num b) {
         Num[] padded = padEqual(copy(a),copy(b));
         if(a.negsign!=b.negsign)
-            return negate(removePadding(productRecursive(padded[0],padded[1], padded[2].val)));
-        return removePadding(productRecursive(padded[0],padded[1], padded[2].val));
+            return negate(removePadding(productRecursive(padded[0],padded[1], padded[2].getDecimalValue())));
+        return removePadding(productRecursive(padded[0],padded[1], padded[2].getDecimalValue()));
     }
 
 
@@ -284,14 +284,15 @@ public class Num  implements Comparable<Num> {
         }
         Num[] a_split = kSplit(copy(a));
         Num[] b_split = kSplit(copy(b));
-        long length1 = a_split[2].val%2==0?(a_split[2].val/2):(a_split[2].val/2+1);
-        long length2 = a_split[2].val/2;;
+        long length3 = a_split[2].getDecimalValue();
+        long length1 = length3%2==0?(length3/2):(length3/2+1);
+        long length2 = length3/2;;
 
         Num firstterm = productRecursive(a_split[0],b_split[0],length1);
         Num lastterm = productRecursive(a_split[1],b_split[1],length2);
         Num[] sumproducts = padEqual(add(a_split[0],a_split[1]),add(b_split[0],b_split[1]));
 
-        Num midterm = productRecursive(sumproducts[0],sumproducts[1],sumproducts[2].val);
+        Num midterm = productRecursive(sumproducts[0],sumproducts[1],sumproducts[2].getDecimalValue());
 
         Num firsttermPad = padRight(firstterm,2*length2);
         Num secondtermPad = padRight(subtract(subtract(midterm,lastterm),firstterm),length2);
@@ -300,7 +301,6 @@ public class Num  implements Comparable<Num> {
 
         return final_res;
     }
-
 
 
     static Num convertToBase(long number){
@@ -312,6 +312,15 @@ public class Num  implements Comparable<Num> {
             Num res = new Num(remainder);
             res.next = convertToBase(quotient);
             return res;
+        }
+    }
+
+
+    public long getDecimalValue(){
+        if(this.hasNext()){
+            return (this.val+10*(this.next.getDecimalValue()));
+        }else{
+            return this.val;
         }
     }
 
@@ -398,10 +407,10 @@ public class Num  implements Comparable<Num> {
 
 
     static Num divide(Num a, Num b) {
-        if(a.compareTo(new Num(0))==0)
-            return a;
         if(b.compareTo(new Num(0))==0)
             throw new IllegalArgumentException("Argument 'divisor' is 0");
+        if(a.compareTo(new Num(0))==0)
+            return a;
         return divideR(removePadding(copy(a)),removePadding(copy(b)))[0];
     }
 
@@ -467,8 +476,12 @@ public class Num  implements Comparable<Num> {
     	Num temp = mod(n,new Num(2));
     	if(temp.compareTo(new Num(0))==0)
     	    return power(product(a,a),divide(n,new Num(2)));
-    	else
-    		return product(a,power(product(a,a),divide(n,new Num(2))));
+    	else{
+    	    Num divisor = divide(n,new Num(2));
+    	    Num product = product(a,a);
+            Num other = power(product,divisor);
+            return product(a,other);
+        }
     }
 
     /*returns the square root of 'a' (truncated)*/
