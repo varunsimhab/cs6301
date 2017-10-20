@@ -20,24 +20,15 @@ import java.util.Stack;
  */
 public class BST<T extends Comparable<? super T>> implements Iterable<T> {
 
-    class Entry{
-        T element;
-        Entry left,right;
-        Entry(T x){
-            this.element=x;
-        }
-    }
-
-    public Stack<Entry> stack = new Stack<Entry>();
-
-    public Entry root;
-
-    int size;
+    private Stack<Entry> stack = new Stack<Entry>();
+    private Entry root;
+    private int size;
 
     public BST() {
         this.root=null;
         this.size=0;
     }
+
     public BST(Comparator<T> cmp)
     {
         this.root = null;
@@ -60,7 +51,6 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
                 if(t.left==null){
                     return t;
                 }
-
                 stack.push(t);
                 t=t.left;
             }
@@ -68,7 +58,6 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
                 if(t.right==null){
                     return t;
                 }
-
                 stack.push(t);
                 t=t.right;
             }
@@ -82,7 +71,7 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
         return (t!=null&&t.element.equals(x));
     }
 
-    private T min(){
+    public T min(){
         if(root==null){
             return null;
         }
@@ -94,8 +83,7 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
 
     }
 
-
-    private T max(){
+    public T max(){
         if(root==null){
             return null;
         }
@@ -106,7 +94,6 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
         return t.element;
 
     }
-
 
     public Boolean add(T x)
     {
@@ -124,8 +111,8 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
             t.left = new Entry(x);
         }
         else{
-             t.right= new Entry(x);
-            }
+            t.right= new Entry(x);
+        }
         size++;
         return true;
     }
@@ -150,8 +137,6 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
         }
         size--;
         return result;
-
-
     }
 
     public void bypass (Entry t){
@@ -163,7 +148,7 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
             root=c;
         }
         else if(pt.left==t){
-              pt.left=c;
+            pt.left=c;
         }
         else{
             pt.right=c;
@@ -172,6 +157,14 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
 
     public Iterator iterator() {
         return new BSTIterator(root);
+    }
+
+    class Entry{
+        T element;
+        Entry left,right;
+        Entry(T x){
+            this.element=x;
+        }
     }
 
     class BSTIterator implements Iterator {
@@ -202,7 +195,5 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
                 t = t.left;
             }
         }
-
-
     }
 }
