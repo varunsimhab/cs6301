@@ -42,14 +42,16 @@ public class BSTMap<K extends Comparable<? super K>, V> implements Iterable<K> {
     /*Get the value associated with the key, if present. Else return null*/
     public V get(K key) {
     	V dummy;
-    	rbt.get(new Pair(key,dummy));
+    	Pair ret = rbt.get(new Pair(key,dummy));
+    	if(ret!=null) return ret.value;
+    	return ret;
     }
 
     
     
     /* Add a new entry into the map */
     public boolean put(K key, V value) {
-    	return rbt.put(new Pair(key,value));
+    	return rbt.add(new Pair(key,value));
     }
 
     
