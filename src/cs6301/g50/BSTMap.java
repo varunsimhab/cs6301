@@ -13,51 +13,42 @@ package cs6301.g50;
 import java.util.Comparator;
 import java.util.Iterator;
 
-public class BSTMap<K extends Comparable<? super K>, V> implements Iterable<K> {
-	RedBlackTree rbt;
-	
-	
-	
-	/* class to store key-value pair*/
-	class Pair implements Comparable<Pair>{
+public class BSTMap<K extends Comparable<? super K>,V> implements Iterable<K> {
+
+    /* class to store key-value pair*/
+	class Pair<K extends Comparable<? super K>,V> implements Comparable<Pair<K,V>>{
 		K key;
 		V value;
 		
 		Pair(K key, V value){this.key = key; this.value = value;}
-		
-		public int compareTo(Pair other) {
-			return key.compareTo(other.key);
+
+		public int compareTo(Pair<K,V> pair) {
+			return key.compareTo(pair.key);
 		}
 	};
-	
-	
-	
-	/* Constructor of the class */
+
+    RedBlackTree<Pair<K,V>> rbt;
+
+    /* Constructor of the class */
     BSTMap() {
-    	rbt = new RedBlackTree<Pair>();
+    	rbt = new RedBlackTree<>();
     }
 
 
-    
     /*Get the value associated with the key, if present. Else return null*/
     public V get(K key) {
-    	V dummy;
-    	Pair ret = rbt.get(new Pair(key,dummy));
+    	Pair<K,V> ret = rbt.get(new Pair(key,null));
     	if(ret!=null) return ret.value;
-    	return ret;
+    	return null;
     }
 
-    
-    
     /* Add a new entry into the map */
-    public boolean put(K key, V value) {
-    	return rbt.add(new Pair(key,value));
+    public void put(K key, V value) {
+    	rbt.add(new Pair(key,value));
     }
 
-    
-    
     /* Iterate over the keys stored in the map, in order */
     public Iterator<K> iterator() {
-	    return rbt.Iterator();
+	    return rbt.iterator();
     }
 }
