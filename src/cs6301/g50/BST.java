@@ -113,7 +113,7 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
 
     }
 
-    public void add(T x){
+    public boolean add(T x){
         if(x == null) throw new IllegalArgumentException("cannot call add() with a null element");
 
         if (root == null) {
@@ -124,6 +124,7 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
 
         if(x.compareTo(t.element)==0){
             t.element=x;
+            return false;
         }
         else if(x.compareTo(t.element)==-1) {
             t.left = new Entry(x);
@@ -131,6 +132,7 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
         else{
             t.right= new Entry(x);
         }
+        return true;
     }
 
     public T remove(T x){

@@ -58,9 +58,10 @@ public class RedBlackTree<T extends Comparable<? super T>> extends BST<T>{
         else                return min(x.getLeft());
     }
 
-    public void add(T t){
+    public boolean add(T t){
         root = add(getRoot(), t);
         getRoot().isRed = false;
+        return true;
     }
 
     private Entry add(Entry h, T t) {

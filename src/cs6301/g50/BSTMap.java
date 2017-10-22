@@ -16,18 +16,18 @@ import java.util.Iterator;
 public class BSTMap<K extends Comparable<? super K>,V> implements Iterable<K> {
 
     /* class to store key-value pair*/
-	class Pair<K extends Comparable<? super K>,V> implements Comparable<Pair<K,V>>{
+	class Pair implements Comparable<Pair>{
 		K key;
 		V value;
 		
 		Pair(K key, V value){this.key = key; this.value = value;}
 
-		public int compareTo(Pair<K,V> pair) {
+		public int compareTo(Pair pair) {
 			return key.compareTo(pair.key);
 		}
 	};
 
-    RedBlackTree<Pair<K,V>> rbt;
+    RedBlackTree<Pair> rbt;
 
     /* Constructor of the class */
     BSTMap() {
@@ -37,7 +37,7 @@ public class BSTMap<K extends Comparable<? super K>,V> implements Iterable<K> {
 
     /*Get the value associated with the key, if present. Else return null*/
     public V get(K key) {
-    	Pair<K,V> ret = rbt.get(new Pair(key,null));
+    	Pair ret = rbt.get(new Pair(key,null));
     	if(ret!=null) return ret.value;
     	return null;
     }
