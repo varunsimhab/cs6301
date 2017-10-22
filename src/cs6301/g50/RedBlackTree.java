@@ -6,7 +6,7 @@ package cs6301.g50;
 import java.util.NoSuchElementException;
 import java.util.Stack;
 
-public class RedBlackTree<T extends Comparable<? super T>> extends BST<T> implements Iterable<T> {
+public class RedBlackTree<T extends Comparable<? super T>> extends BST<T>{
     class Entry extends BST<T>.Entry {
         private boolean isRed;
         Entry(T x, Entry left, Entry right) {
