@@ -67,13 +67,13 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
 
     Entry find(Entry t,T x){
         if(t.element == x) return t;
-        if(x.compareTo(t.element)==-1){
+        if(x.compareTo(t.element)<0){
             if(t.left==null){
                 return t;
             }
             stack.push(t);
             return find(t.left, x);
-        }else if(x.compareTo(t.element)==1){
+        }else if(x.compareTo(t.element)>0){
             if(t.right==null){
                 return t;
             }
@@ -126,7 +126,7 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
             t.element=x;
             return false;
         }
-        else if(x.compareTo(t.element)==-1) {
+        else if(x.compareTo(t.element)<0) {
             t.left = new Entry(x);
         }
         else{
