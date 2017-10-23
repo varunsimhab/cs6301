@@ -21,7 +21,7 @@ import java.util.Stack;
  */
 public class BST<T extends Comparable<? super T>> implements Iterable<T> {
 
-    private Stack<Entry> stack = new Stack<Entry>();
+    protected Stack<Entry> stack = new Stack<Entry>();
     protected Entry root;
 
     class Entry{
@@ -57,7 +57,7 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
 
     Entry find(T x){
         stack =new Stack<Entry>();
-        if(root == null) return null;
+        stack.push(null);
         return find(root,x);
     }
 

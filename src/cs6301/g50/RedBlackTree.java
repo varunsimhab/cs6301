@@ -131,14 +131,13 @@ public class RedBlackTree<T extends Comparable<? super T>> extends BST<T>{
     }
 
     public void deleteMin() {
-        if (isEmpty()) throw new NoSuchElementException("BST underflow");
+        if (isEmpty()) throw new NoSuchElementException("underflow, no elements to delete");
 
         if (!isRed(getRoot().getLeft()) && !isRed(getRoot().getRight()))
             getRoot().isRed = true;
 
         root = deleteMin(getRoot());
         if (!isEmpty()) getRoot().isRed = false;
-        // assert check();
     }
 
     private Entry deleteMin(Entry h) {
@@ -163,8 +162,8 @@ public class RedBlackTree<T extends Comparable<? super T>> extends BST<T>{
         if (super.size()==0) getRoot().isRed = false;
     }
 
-    private Entry delete(Entry h, T key) {
-
+    private Entry delete(Entry h, T key)
+    {
         if (key.compareTo(h.element) < 0)  {
             if (!(isRed(h.getLeft())) && !(isRed(h.getLeft().getLeft())))
                 h = moveRedLeft(h);
@@ -187,34 +186,6 @@ public class RedBlackTree<T extends Comparable<? super T>> extends BST<T>{
         return balance(h);
     }
 
-    public void printLevels( )
-    {
-        if( isEmpty( ) )
-            System.out.println( "Empty tree" );
-        else{
-            Stack<Entry> stack = new Stack<>();
-            stack.push(getRoot());
-            printLevels(stack);
-        }
-    }
-
-    private void printLevels( Stack<Entry> stack )
-    {
-        Stack<Entry> fstack = new Stack<>();
-        while (!stack.empty()){
-            Entry node = stack.pop();
-            if(node.isRed){
-                System.out.print(node.element+" ");
-            }else System.out.print(String.format("[%d] ",node.element));
-            if(null!=node.right) fstack.push(node.getRight());
-            if(null!=node.left) fstack.push(node.getLeft());
-        }
-        System.out.println();
-        if(!fstack.empty()){
-            printLevels(fstack);
-        }
-    }
-
     public static void main( String [ ] args )
     {
         RedBlackTree<Integer> t = new RedBlackTree<>( );
@@ -222,8 +193,6 @@ public class RedBlackTree<T extends Comparable<? super T>> extends BST<T>{
 
         for( int i = 0; i != NUMS; i++ )
             t.add( i );
-
-        t.printLevels();
     }
 }
 
