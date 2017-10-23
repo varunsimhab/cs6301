@@ -1,7 +1,3 @@
-package cs6301.g50;
-
-import java.util.*;
-
 /*
  * Created by
  * Group 50
@@ -13,11 +9,16 @@ import java.util.*;
  *
  */
 
+package cs6301.g50;
+import java.util.*;
+
 public class BST<T extends Comparable<? super T>> implements Iterable<T> {
     protected Stack<Entry> stack = new Stack<Entry>();
     protected Entry root;
     private Entry previous;
 
+    
+    
     class Entry {
         T element;
         Entry left, right;
@@ -33,23 +34,33 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
         }
     }
 
+    
+    
     public BST() {
         this.root = null;
     }
 
+    
+    
     public BST(Comparator<T> cmp) {
         this.root = null;
     }
 
+    
+    
     public int size() {
         return size(root);
     }
 
+    
+    
     private int size(Entry x) {
         if (x == null) return 0;
         else return 1 + size(x.left) + size(x.right);
     }
 
+    
+    
     Entry find(T x) {
         stack = new Stack<Entry>();
         stack.push(null);
@@ -57,10 +68,14 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
         return find(root, x);
     }
 
+    
+    
     T get(T x) {
         return find(x).element;
     }
 
+    
+    
     /**   @params : t - Root node
      *    @params : x - Element to be searched
      *    @return : If element was found that node is returned else
@@ -87,6 +102,8 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
         return t;
     }
 
+    
+    
     /**  Method used to check if an element is in BST.
      *   @params: x element to search in the tree
      *   @return: returns true if found, false otherwise.
@@ -96,14 +113,19 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
         return (t != null && t.element.equals(x));
     }
 
+    
+    
     public T min() {
         if (root == null) {
             throw new NoSuchElementException("calls min() with empty symbol table");
         }
         stack = new Stack<>();
+        stack.push(null);
         return min(root).element;
     }
 
+    
+    
     protected Entry min(Entry x) {
         if (x.left == null) return x;
         else {
@@ -112,6 +134,8 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
         }
     }
 
+    
+    
     /**  Finds the max element
      *  @returns : max element value.
      **/
@@ -120,6 +144,7 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
             return null;
         }
         stack = new Stack<>();
+        stack.push(null);
         Entry t = root;
         while (t.right != null) {
             stack.push(t);
@@ -128,6 +153,8 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
         return t.element;
     }
 
+    
+    
     /**   Add method finds the location where an element should be added
      *    using find and adds the element at the appropriate location.
      *    @params Node value to be added
@@ -149,6 +176,7 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
         return true;
     }
 
+    
 
     /**   Remove method finds the location where the element is to be removed
      *    using find method and then removes element at that appropriate method.
@@ -175,6 +203,8 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
         return result;
     }
 
+    
+    
     public void bypass(Entry t) {
         Entry pt = stack.peek();
         Entry c = t.left == null ? t.right : t.left;
@@ -187,6 +217,8 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
         }
     }
 
+    
+    
     public Comparable[] toArray(Entry root) {
         Comparable[] arr = new Comparable[size()];    /* write code to place elements in array here */
         List<Entry> nodeList = new ArrayList<>();
@@ -196,6 +228,8 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
         return arr;
     }
 
+    
+    
     private void toArray(Entry root, List<Entry> list) {
         if (root == null) return;
         toArray((Entry) root.left, list);
@@ -203,10 +237,14 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
         toArray((Entry) root.right, list);
     }
 
+    
+    
     public Iterator iterator() {
         return new BSTIterator(root);
     }
 
+    
+    
     class BSTIterator implements Iterator {
         public BSTIterator(Entry root) {
             stack = new Stack<Entry>();
@@ -237,6 +275,8 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
         }
     }
 
+    
+    
     /**BST Verification
      *@params T - the root or the node from where test to be done.
      **/
