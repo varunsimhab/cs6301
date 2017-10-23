@@ -1,3 +1,5 @@
+package cs6301.g50;
+
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Stack;
@@ -77,8 +79,7 @@ public class AVLTree<T extends Comparable<? super T>> extends BST<T> {
 
     @Override
     public boolean contains(T x) {
-        Entry entry = (Entry) find(root, x);
-        return find(root, x) != null && entry.element.compareTo(x)==0;
+        return find(root, x) != null;
     }
 
     @Override

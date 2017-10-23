@@ -12,7 +12,7 @@ public class SP8Q4Driver {
     }
 
     public static long testTree(double[] probArray, BST t){
-        final int NUMS = 100000000;
+        final int NUMS = 10000000;
         final int GAP  =   3;
         Timer timer = new Timer();
 
