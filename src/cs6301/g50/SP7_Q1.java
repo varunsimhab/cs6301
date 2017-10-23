@@ -1,8 +1,6 @@
-import java.util.Iterator;
+package cs6301.g50;
 
-/**
- * Created by Varun on 10/14/2017.
- */
+import java.util.Iterator;
 
 /*
  * Created by

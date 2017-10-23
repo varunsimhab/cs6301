@@ -4,10 +4,6 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Stack;
 
-/**
- * Created by Sarath on 10/22/2017.
- */
-
 /*
  * Created by
  * Group 50

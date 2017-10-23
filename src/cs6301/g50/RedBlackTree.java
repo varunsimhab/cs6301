@@ -1,10 +1,15 @@
-
-/** Starter code for Red-Black Tree
+/*
+ * Created by
+ * Group 50
+ *
+ * Varun Simha Balaraju
+ * Venkata Sarath Chandra Prasad Nelapati
+ * Jithin Paul
+ * Sunit Mathew
+ *
  */
-package cs6301.g50;
 
-import java.util.NoSuchElementException;
-import java.util.Stack;
+package cs6301.g50;
 
 public class RedBlackTree<T extends Comparable<? super T>> extends BST<T>{
 
@@ -165,7 +170,6 @@ public class RedBlackTree<T extends Comparable<? super T>> extends BST<T>{
         if (isRed(h.getRight()))                      h = rotateLeft(h);
         if (isRed(h.getLeft()) && isRed(h.getLeft().getLeft())) h = rotateRight(h);
         if (isRed(h.getLeft()) && isRed(h.getRight()))     flipColors(h);
-
         return h;
     }
 
@@ -188,7 +192,7 @@ public class RedBlackTree<T extends Comparable<? super T>> extends BST<T>{
     /**
      * Function to remove an element
      */
-    public Entry remove(T key) {
+    public T remove(T key) {
         if (key == null) throw new IllegalArgumentException("argument to remove() is null");
         if (!contains(key)) return null;
 
@@ -197,6 +201,7 @@ public class RedBlackTree<T extends Comparable<? super T>> extends BST<T>{
 
         root = remove(getRoot(), key);
         if (super.size()==0) getRoot().isRed = false;
+        return key;
     }
 
 
@@ -227,12 +232,44 @@ public class RedBlackTree<T extends Comparable<? super T>> extends BST<T>{
         return balance(h);
     }
 
+    /**
+     * Function to validate the correctness of the RedBlackTree which is no two consecutive red nodes and
+     * number of black nodes across all paths are the same
+     * @return true if correct else false
+     *
+     */
+    public boolean validateTree(){
+        return validateTree(getRoot(),0)>0;
+    }
+
+    /**
+     * Private function to validate correctness of RedBlack Tree
+     * @param root the node that is presently being examined
+     * @param bDepth the depth of Black Nodes at this depth
+     * @return bDepth including this node
+     *
+     */
+    public int validateTree(Entry root, int bDepth){
+        if(root==null) return bDepth;
+        if(root.isRed&&isRed(root.getLeft())||root.isRed&&isRed(root.getRight())) return -1;
+        int val = root.isRed?0:1;
+        if(root.right==null&&root.left==null) return bDepth+val;
+        int lval = validateTree(root.getLeft(),bDepth+val);
+        int rval = validateTree(root.getRight(), bDepth+val);
+        if(lval==rval&&lval!=-1){
+            return lval;
+        }
+        return -1;
+    }
+
     public static void main( String [ ] args )
     {
         RedBlackTree<Integer> t = new RedBlackTree<>( );
-        final int NUMS = 46;
+        final int NUMS = 10000;
 
         for( int i = 0; i != NUMS; i++ )
             t.add( i );
+
+        System.out.println(t.validateTree());
     }
 }
