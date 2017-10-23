@@ -38,7 +38,9 @@ public class AVLTree<T extends Comparable<? super T>> extends BST<T> {
 
     @Override
     public boolean add(T x) {
-        if (find(x) != null) return false;
+        Entry e = (Entry) find(root, x);
+        if (e != null && e.element.compareTo(x) == 0)
+            return false;
         this.root = add(root, x);
         numNodes++;
         return true;
@@ -56,7 +58,11 @@ public class AVLTree<T extends Comparable<? super T>> extends BST<T> {
 
     @Override
     public T remove(T x) {
-        remove(root, x);
+        Entry e = (Entry) find(root, x);
+        if (e != null && e.element.compareTo(x) == 0) {
+            remove(root, x);
+            numNodes--;
+        }
         return x;
     }
 
@@ -78,7 +84,7 @@ public class AVLTree<T extends Comparable<? super T>> extends BST<T> {
     @Override
     public boolean contains(T x) {
         Entry entry = (Entry) find(root, x);
-        return find(root, x) != null && entry.element.compareTo(x)==0;
+        return find(root, x) != null && entry.element.compareTo(x) == 0;
     }
 
     @Override
@@ -146,7 +152,7 @@ public class AVLTree<T extends Comparable<? super T>> extends BST<T> {
 
     /**
      * Double rotate binary tree node: first right child with its left child;
-     * then node 'node' with new right child. For AVL trees, this is a double
+     * then node k1 with new right child. For AVL trees, this is a double
      * rotation for case 3. Update heights, then return new root.
      */
     private Entry doubleRotationWithRight(Entry node) {
@@ -182,43 +188,37 @@ public class AVLTree<T extends Comparable<? super T>> extends BST<T> {
         }
     }
 
-    public void displayTree()
-    {
+    public void displayTree() {
         System.out.println("\n");
         Stack<Entry> globalStack = new Stack<>();
         globalStack.push(root);
-        int emptyLeaf = (int) Math.pow(2,root.height+1);
+        int emptyLeaf = (int) Math.pow(2, root.height + 1);
         boolean isRowEmpty = false;
-        while(!isRowEmpty)
-        {
+        while (!isRowEmpty) {
             Stack<Entry> localStack = new Stack<>();
             isRowEmpty = true;
-            for(int j=0; j<emptyLeaf; j++)
+            for (int j = 0; j < emptyLeaf; j++)
                 System.out.print(" ");
-            while(!globalStack.isEmpty())
-            {
+            while (!globalStack.isEmpty()) {
                 Entry temp = globalStack.pop();
-                if(temp != null)
-                {
-                    System.out.print(temp.element+" ");
+                if (temp != null) {
+                    System.out.print(temp.element + " ");
                     localStack.push((Entry) temp.left);
                     localStack.push((Entry) temp.right);
-                    if(temp.left != null ||temp.right != null)
+                    if (temp.left != null || temp.right != null)
                         isRowEmpty = false;
-                }
-                else
-                {
+                } else {
                     System.out.print("[]");
                     localStack.push(null);
                     localStack.push(null);
                 }
-                for(int j=0; j<emptyLeaf*2-2; j++)
+                for (int j = 0; j < emptyLeaf * 2 - 2; j++)
                     System.out.print(" ");
             }
             System.out.println();
             emptyLeaf /= 2;
-            while(!localStack.isEmpty())
-                globalStack.push( localStack.pop() );
+            while (!localStack.isEmpty())
+                globalStack.push(localStack.pop());
         }
         System.out.println("\n\n");
 
@@ -245,25 +245,31 @@ public class AVLTree<T extends Comparable<? super T>> extends BST<T> {
 //                tree.printLevelOrder(tree.root);
                 tree.displayTree();
             } else {
+                Comparable[] arr = tree.toArray(tree.root);
                 System.out.print("Final: ");
-                tree.printTree(tree.root);
+                for (int i = 0; i < arr.length; i++) {
+                    System.out.print(arr[i] + " ");
+                }
                 System.out.println();
                 System.out.println("Verification : ");
                 tree.printBalanceFactors();
-                System.out.println("Contains : 10 ? "+tree.contains(10));
-                System.out.println("Contains : 3 ? "+tree.contains(3));
+                System.out.println("Contains : 10 ? " + tree.contains(10));
+                System.out.println("Contains : 3 ? " + tree.contains(3));
+
                 return;
             }
         }
         System.out.println("Done");
     }
+
     private void printBalanceFactors() {
         printBalanceFactors(root);
     }
+
     private void printBalanceFactors(Entry root) {
-        if(root == null) return;
-        System.out.println("Node : "+root.element+" Balance Factor : "
-                +Math.abs(getHeight((Entry) root.left)-getHeight((Entry) root.right)));
+        if (root == null) return;
+        System.out.println("Node : " + root.element + " Balance Factor : "
+                + Math.abs(getHeight((Entry) root.left) - getHeight((Entry) root.right)));
         printBalanceFactors((Entry) root.left);
         printBalanceFactors((Entry) root.right);
 
