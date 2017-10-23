@@ -265,10 +265,23 @@ public class AVLTree<T extends Comparable<? super T>> extends BST<T> {
                 System.out.print("Final: ");
                 tree.printTree(tree.root);
                 System.out.println();
+                System.out.println("Verification : ");
+                tree.printBalanceFactors();
                 return;
             }
         }
         System.out.println("Done");
+    }
+    private void printBalanceFactors() {
+        printBalanceFactors(root);
+    }
+    private void printBalanceFactors(Entry root) {
+        if(root == null) return;
+        System.out.println("Node : "+root.element+" Balance Factor : "
+                +Math.abs(getHeight((Entry) root.left)-getHeight((Entry) root.right)));
+        printBalanceFactors((Entry) root.left);
+        printBalanceFactors((Entry) root.right);
+
     }
 
 }
