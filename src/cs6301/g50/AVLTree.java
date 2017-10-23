@@ -77,7 +77,8 @@ public class AVLTree<T extends Comparable<? super T>> extends BST<T> {
 
     @Override
     public boolean contains(T x) {
-        return find(root, x) != null;
+        Entry entry = (Entry) find(root, x);
+        return find(root, x) != null && entry.element.compareTo(x)==0;
     }
 
     @Override
@@ -145,7 +146,7 @@ public class AVLTree<T extends Comparable<? super T>> extends BST<T> {
 
     /**
      * Double rotate binary tree node: first right child with its left child;
-     * then node k1 with new right child. For AVL trees, this is a double
+     * then node 'node' with new right child. For AVL trees, this is a double
      * rotation for case 3. Update heights, then return new root.
      */
     private Entry doubleRotationWithRight(Entry node) {
@@ -223,24 +224,6 @@ public class AVLTree<T extends Comparable<? super T>> extends BST<T> {
 
     }
 
-//    private void printLevelOrder(Entry root){
-//        if(root == null) return;
-//        Queue<Entry> queue = new LinkedList<>();
-//        queue.add(root);
-//        queue.add(null);
-//        while(!queue.isEmpty()){
-//            Entry node = queue.poll();
-//            if(node == null && queue.size() !=0) {
-//                System.out.println();
-//                queue.add(null);
-//                continue;
-//            }
-//            System.out.print(node.element+" ");
-//            if(node.left != null)  queue.add((Entry) node.left);
-//            if(node.right != null)  queue.add((Entry) node.right);
-//        }
-//    }
-
     @Override
     public int size() {
         return numNodes;
@@ -267,6 +250,8 @@ public class AVLTree<T extends Comparable<? super T>> extends BST<T> {
                 System.out.println();
                 System.out.println("Verification : ");
                 tree.printBalanceFactors();
+                System.out.println("Contains : 10 ? "+tree.contains(10));
+                System.out.println("Contains : 3 ? "+tree.contains(3));
                 return;
             }
         }
