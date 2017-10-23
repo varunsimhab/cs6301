@@ -50,4 +50,16 @@ public class BSTMap<K extends Comparable<? super K>,V> implements Iterable<K> {
     public Iterator<K> iterator() {
 	    return rbt.iterator();
     }
+
+
+    public static void main( String [ ] args )
+    {
+        BSTMap<Integer, Integer> t = new BSTMap<>( );
+        final int NUMS = 10000000;
+
+        for( int i = 0; i != NUMS; i++ ){
+            t.put( i , i+1);
+            t.get( i-1);
+        }
+    }
 }

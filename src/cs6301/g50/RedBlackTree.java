@@ -271,5 +271,10 @@ public class RedBlackTree<T extends Comparable<? super T>> extends BST<T>{
             t.add( i );
 
         System.out.println(t.validateTree());
+
+        for( int i = 0; i != NUMS; i += 2 )
+            t.remove( i );
+
+        System.out.println(t.validateTree());
     }
 }

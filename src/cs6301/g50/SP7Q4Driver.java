@@ -12,7 +12,7 @@
 package cs6301.g50;
 import java.util.Random;
 
-public class SP8Q4Driver {
+public class SP7Q4Driver {
 
     public static void main( String [ ] args )
     {
