@@ -5,3 +5,9 @@ Files needed -
 
 AVLTree.java
 and files required for BST.
+
+To run -
+
+java AVLTree
+
+input - 1 3 5 7 9 2 4 6 8 10 -3 -6 -3 0
