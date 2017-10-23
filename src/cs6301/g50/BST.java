@@ -182,28 +182,35 @@ public class BST<T extends Comparable<? super T>> implements Iterable<T> {
 
     class BSTIterator implements Iterator {
 
+        Stack<Entry> stack;
+
         public BSTIterator(Entry root) {
-            stack = new Stack<Entry>();
+            stack = new Stack<>();
             traverseLeft(root);
         }
 
-        /** return whether we have a next smallest number */
+        /**
+         * return whether we have a next smallest number
+         */
+
+        @Override
         public boolean hasNext() {
             return !stack.isEmpty();
         }
 
         /**
-         *  returns the next smallest number
-         * */
+         * returns the next smallest number
+         */
 
+        @Override
         public T next() {
             Entry t = stack.pop();
-            traverseLeft(t.right);
+            traverseLeft( t.right);
             return t.element;
         }
 
-        private void traverseLeft(Entry t){
-            while (t!= null) {
+        private void traverseLeft(Entry t) {
+            while (t != null) {
                 stack.push(t);
                 t = t.left;
             }
