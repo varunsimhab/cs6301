@@ -4,6 +4,7 @@
 
 import java.util.Iterator;
 
+
 /**  Iterator for arrays
  *   @author rbk
  *  Ver 1.0: 2017/08/08

@@ -2,6 +2,11 @@
  * Created by Varun on 9/16/2017.
  */
 
+package LP3;
+
+//import cs6301.g50.ArrayIterator;
+
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -52,7 +57,7 @@ public class DFS extends GraphAlgorithm<DFS.DFSVertex> {
     Graph.Vertex src;
     int stronglyConnectedComponents(Graph g){
         int count=0;
-        ArrayIterator<Graph.Vertex> it =  g.iterator();
+        ArrayIterator<Graph.Vertex> it =g.iterator();
         dfs(it,false);
         for(Graph.Vertex u : g) {
             List<Graph.Edge> temp;

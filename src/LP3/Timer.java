@@ -18,6 +18,7 @@
  * Jithin Paul
  * Sunit Mathew
  **/
+package LP3;
 
 public class Timer {
     long startTime, endTime, elapsedTime, memAvailable, memUsed;

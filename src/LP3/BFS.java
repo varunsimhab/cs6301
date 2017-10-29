@@ -1,7 +1,7 @@
 /**
  * Created by Varun on 2/13/2017.
  */
-
+package LP3;
 import java.util.Iterator;
 import java.util.LinkedList;
 public class BFS {

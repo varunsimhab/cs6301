@@ -1,6 +1,7 @@
 /**
  * Created by Varun on 10/29/2017.
  */
+package LP3;
 public class GraphAlgorithm<T> {
     Graph g;
     // Algorithm uses a parallel array for storing information about vertices

@@ -11,6 +11,8 @@
 
 //package cs6301.g50; 
 import java.util.NoSuchElementException;
+import java.util.Random;
+
 import SinglyLinkedList;
 
 public class SortableList<T extends Comparable<? super T>> extends SinglyLinkedList<T> {
@@ -89,7 +91,7 @@ public class SortableList<T extends Comparable<? super T>> extends SinglyLinkedL
           //  n = Integer.parseInt(args[0]);
         //}
         SortableList<Integer> lst = new SortableList<Integer>();
-        Random generator = new Random(); 
+        Random generator = new Random();
         for(int i=1; i<=n; i++) {
             lst.add(generator.nextInt(100));
         }
